@@ -16,10 +16,10 @@
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">刷新</li>
-      <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">关闭</li>
-      <li @click="closeOthersTags">关闭其他</li>
-      <li @click="closeAllTags(selectedTag)">关闭所有</li>
+      <li @click="refreshSelectedTag(selectedTag)">{{$t('navbar.refresh')}}</li>
+      <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">{{$t('navbar.close')}}</li>
+      <li @click="closeOthersTags">{{$t('navbar.closeothers')}}</li>
+      <li @click="closeAllTags(selectedTag)">{{$t('navbar.closeall')}}</li>
     </ul>
   </div>
 </template>
@@ -28,6 +28,7 @@
 import ScrollPane from '@/components/ScrollPane'
 import path from 'path'
 import { constantRouterMap } from '@/router/routers'
+import { fpthome } from '@/utils/i18n'
 export default {
   components: { ScrollPane },
   data() {
@@ -62,6 +63,7 @@ export default {
     this.addViewTags()
   },
   methods: {
+    fpthome,
     isActive(route) {
       return route.path === this.$route.path
     },

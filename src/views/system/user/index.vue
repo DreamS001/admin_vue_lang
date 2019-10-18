@@ -15,14 +15,14 @@
         <!--工具栏-->
         <div class="head-container">
           <!-- 搜索 -->
-          <el-input v-model="query.value" clearable placeholder="输入关键字搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery"/>
-          <el-select v-model="query.type" clearable placeholder="类型" class="filter-item" style="width: 130px">
+          <el-input v-model="query.value" clearable :placeholder="$t('systemes.enterkeywordsearch')" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery"/>
+          <el-select v-model="query.type" clearable :placeholder="$t('systemes.type')" class="filter-item" style="width: 130px">
             <el-option v-for="item in queryTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
-          <el-select v-model="query.enabled" clearable placeholder="状态" class="filter-item" style="width: 90px" @change="toQuery">
+          <el-select v-model="query.enabled" clearable :placeholder="$t('systemes.status')" class="filter-item" style="width: 90px" @change="toQuery">
             <el-option v-for="item in enabledTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
-          <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="toQuery">搜索</el-button>
+          <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="toQuery">{{$t('systemes.search')}}</el-button>
           <!-- 新增 -->
           <!-- <div v-permission="['ADMIN','USER_ALL','USER_CREATE']" style="display: inline-block;margin: 0px 2px;">
             <el-button
@@ -41,37 +41,37 @@
               class="filter-item"
               type="warning"
               icon="el-icon-download"
-              @click="download">导出</el-button>
+              @click="download">{{$t('systemes.export')}}</el-button>
           </div>
         </div>
         <!--表格渲染-->
         <el-table  :data="data"  style="width: 100%;" :row-class-name="setClassName" :header-row-class-name="handlemyclass">
-          <el-table-column prop="username" label="用户名"/>
-          <el-table-column prop="phone" label="电话"/>
-          <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱"/>
-          <el-table-column label="上级代理">
+          <el-table-column prop="username" :label="$t('systemes.username')"/>
+          <el-table-column prop="phone" :label="$t('systemes.phone')"/>
+          <el-table-column :show-overflow-tooltip="true" prop="email" :label="$t('systemes.mailbox')"/>
+          <el-table-column :label="$t('systemes.superioragent')">
             <template slot-scope="scope">
               <div>{{ scope.row.dept.name }}</div>
             </template>
           </el-table-column>
-					<el-table-column label="用户类型">
+					<el-table-column :label="$t('systemes.usertype')">
 					  <template slot-scope="scope">
 					    <div>{{ scope.row.job.name }}</div>
 					  </template>
 					</el-table-column>
-					<el-table-column label="商户标识">
+					<el-table-column :label="$t('systemes.merchantidentification')">
 					  <template slot-scope="scope">
 					    <div>{{ scope.row.merchantId }}</div>
 					  </template>
 					</el-table-column>
-          <el-table-column label="状态" align="center">
+          <el-table-column :label="$t('systemes.status')" align="center">
             <template slot-scope="scope">
               <div v-for="item in dicts" :key="item.id">
                 <el-tag v-if="scope.row.enabled.toString() === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
               </div>
             </template>
           </el-table-column>
-          <el-table-column :show-overflow-tooltip="true" prop="createTime" label="创建日期">
+          <el-table-column :show-overflow-tooltip="true" prop="createTime" :label="$t('systemes.creationdate')">
             <template slot-scope="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
@@ -124,6 +124,7 @@ import eForm from './form'
 import { getToken } from "@/utils/auth";
 
 import zfIndex from '../dept/index'
+import { systemes } from '@/utils/i18n'
 export default {
   components: { eForm,zfIndex },
   mixins: [initData, initDict],
@@ -165,6 +166,7 @@ export default {
     }
   },
   methods: {
+    systemes,
     parseTime,
     checkPermission,
     beforeInit() {

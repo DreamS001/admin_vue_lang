@@ -1,27 +1,37 @@
 <template>
-  <div class="item-box clearfix">
+  <div class=" clearfix">
     <div style="" class="item-box-div" >
       <div class="item-lg">
         <div class="item">
           <div class="item-top clearfix">
             <div class="top-left">
-              <span>我的交易</span>
+              <span>
+                <!-- 我的交易 -->
+                {{$t('navbar.mydeal')}}
+                </span>
               <img src="../../assets/images/img_jianbian.png" alt="" srcset="" >
             </div>
             <div class="top-right" @click="deal">
-              查看详情
+              <!-- 查看详情 -->
+              {{$t('navbar.viewdetails')}}
             </div>
           </div>
           <div class="data-box">
             <div class="item-middle">
-              <div class="middle-left">设备数</div>
+              <div class="middle-left">
+                <!-- 设备数 -->
+                {{$t('navbar.devicenum')}}
+                </div>
               <div class="middle-m">
                 <div class="middle-m-d" :style="{ width: dataTable.deviceNum + 'px' }" style="background:rgba(255, 171, 79, 1);"></div>
               </div>
-              <div class="middle-right">{{earn.deviceNum}}台</div>
+              <div class="middle-right">{{earn.deviceNum}} {{$t('navbar.platform')}}</div>
             </div>
             <div class="item-middle">
-              <div class="middle-left">我的交易额</div>
+              <div class="middle-left">
+                <!-- 我的交易额 -->
+                {{$t('navbar.myturnover')}}
+                </div>
               <div class="middle-m">
                 <div class="middle-m-d" :style="{ width: dataTable.totalTradeAmount + 'px' }" style="background:rgba(236, 105, 65, 1);"></div>
               </div>
@@ -34,30 +44,43 @@
         <div class="item">
           <div class="item-top clearfix">
             <div class="top-left">
-              <span>我的收益</span>
+              <span>
+                <!-- 我的收益 -->
+                {{$t('navbar.myearnings')}}
+                </span>
               <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
             </div>
             <div class="top-right" @click="earns">
-              查看详情
+              <!-- 查看详情 -->
+              {{$t('navbar.viewdetails')}}
             </div>
           </div>
           <div class="data-box">
             <div class="item-middle">
-              <div class="middle-left" style="width:23%">累计收益</div>
+              <div class="middle-left" style="width:23%">
+                <!-- 累计收益 -->
+                {{$t('navbar.accumulatedearnings')}}
+                </div>
               <div class="middle-m">
                 <div class="middle-m-d" :style="{ width: dataTable.totalProfit + 'px' }" style="background:rgba(255, 171, 79, 1);"></div>
               </div>
               <div class="middle-right">${{earn.totalProfit}}</div>
             </div>
             <div class="item-middle">
-              <div class="middle-left" style="width:23%">今日收益</div>
+              <div class="middle-left" style="width:23%">
+                <!-- 今日收益 -->
+                {{$t('navbar.todayearnings')}}
+                </div>
               <div class="middle-m">
                 <div class="middle-m-d" :style="{ width: dataTable.dayProfit + 'px' }" style="background:rgba(236, 105, 65, 1);"></div>
               </div>
               <div class="middle-right">${{earn.dayProfit}}</div>
             </div>
             <div class="item-middle">
-              <div class="middle-left" style="width:23%">今日投资</div>
+              <div class="middle-left" style="width:23%">
+                <!-- 今日投资 -->
+                {{$t('navbar.todayinvestment')}}
+                </div>
               <div class="middle-m">
                 <div class="middle-m-d" :style="{ width: dataTable.dayInvest + 'px' }" style="background:rgba(0, 170, 255, 1);"></div>
               </div>
@@ -73,20 +96,27 @@
         <div class="item">
           <div class="item-top clearfix">
             <div class="top-left">
-              <span>我的团队</span>
+              <span>
+                <!-- 我的团队 -->
+                {{$t('navbar.myteam')}}
+                </span>
               <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
             </div>
             <div class="top-right" @click="team">
-              查看详情
+              <!-- 查看详情 -->
+              {{$t('navbar.viewdetails')}}
             </div>
           </div>
           <div class="data-box">
             <div class="item-middle">
-              <div class="middle-left">我的团队</div>
+              <div class="middle-left">
+                <!-- 我的团队 -->
+                {{$t('navbar.myteam')}}
+                </div>
               <div class="middle-m">
                 <div class="middle-m-d" :style="{ width: dataTable.teamNum + 'px' }" style="background:rgba(0, 170, 255, 1);"></div>
               </div>
-              <div class="middle-right">{{earn.teamNum}}人</div>
+              <div class="middle-right">{{earn.teamNum}} {{$t('navbar.person')}}</div>
             </div>
           </div>
         </div>
@@ -95,7 +125,10 @@
         <div class="item">
           <div class="item-top clearfix">
             <div class="top-left">
-              <span>动态公告</span>
+              <span>
+                <!-- 动态公告 -->
+                {{$t('navbar.news')}}
+                </span>
               <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
             </div>
           </div>
@@ -310,6 +343,7 @@ require("echarts/theme/macarons"); // echarts theme
 import { debounce } from "@/utils";
 import { getChartData } from "@/api/visits";
 import { notice, earn } from "@/api/map";
+import { fpthome } from '@/utils/i18n'
 
 export default {
   props: {
@@ -385,6 +419,7 @@ export default {
     });
   },
   methods: {
+    fpthome,
     deal() {
       this.$router.push({ path: "/deal/deallist" });
     },
@@ -455,7 +490,8 @@ export default {
     .item-box{
       display: flex;
       .item-box-div{
-          width:50%;
+          width:49%;
+          display: inline-block;
          .item-lg{
           width: 50%;
           float:left;

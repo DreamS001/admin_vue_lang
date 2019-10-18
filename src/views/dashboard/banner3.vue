@@ -3,26 +3,26 @@
     <div class="footer">
       <div class="list-f">
         <h5>
-          <span>联系我们</span>
+          <span>{{$t('navbar.contactus')}}</span>
           <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
         </h5>
         <p>
           <!-- <span>电话客服:{{phone}}</span>
           <span>客服QQ:{{qq}}</span>
           <span>公司邮箱:{{email}}</span> -->
-          <span>公司名称：{{name}}</span>
-          <span>邮箱账号：{{email}}</span>
+          <span>{{$t('navbar.companyname')}}：{{name}}</span>
+          <span>{{$t('navbar.emailaccounts')}}：{{email}}</span>
           <!-- <span>Facebook账号：{{facebook}}</span> -->
         </p>
       </div>
       <div class="list-f">
         <h5>
-          <span>推广链接</span>
+          <span>{{$t('navbar.referrallinks')}}</span>
           <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
         </h5>
         <p style="display: flex;justify-content: space-between;align-items: center">
           <span class="tg-url">{{Url}}</span>
-          <span class="copy" :data-clipboard-text="Url" @click="copyUrl">复制</span>
+          <span class="copy" :data-clipboard-text="Url" @click="copyUrl">{{$t('navbar.copy')}}</span>
         </p>
       </div>
     </div>
@@ -35,6 +35,7 @@ require("echarts/theme/macarons"); // echarts theme
 import { debounce } from "@/utils";
 import { getChartData , getUrl } from "@/api/visits";
 import {foot}  from "@/api/map";
+import { fpthome } from '@/utils/i18n'
 export default {
   props: {
     className: {
@@ -87,6 +88,7 @@ export default {
     })
   },
   methods: {
+    fpthome,
     copyUrl(){
 			let _this = this;
      let clipboard = new this.clipboard(".copy");

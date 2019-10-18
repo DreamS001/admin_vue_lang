@@ -11,7 +11,86 @@
 const cn= {
   // 导航栏
   navbar: {
-    title: '欢迎光临'
+    // 顶部导航栏
+    title: '欢迎光临',
+    personal:'个人中心',
+    logout:'退出登录',
+    // 顶部标签栏的对应的右击按钮
+    refresh:'刷新',
+    close:'关闭',
+    closeothers:'关闭其它',
+    closeall:'关闭所有',
+    // 中间四块内容
+    viewdetails:'查看详情',
+    mydeal:'我的交易',
+    devicenum:'设备数',
+    platform:'台',
+    myturnover:'我的交易额',
+    myearnings:'我的收益',
+    accumulatedearnings:'累计收益',
+    todayearnings:'今日收益',
+    todayinvestment:'今日投资',
+    myteam:'我的团队',
+    person:'人',
+    news:'动态公告',
+    //设备分布的大块
+    eda:'设备分布',
+    gmv:'交易总额',
+    totaltransactions:'交易笔数',
+    totalnumberdevices:'总设备数',
+    totalinvestment:'总投资',
+    // 底部联系我们块
+    contactus:'联系我们',
+    companyname:'公司名称',
+    emailaccounts:'邮箱账号',
+    // 推广链接块
+    referrallinks:'推广链接',
+    copy:'复制',
+  },
+  home:{
+    home:'首页',
+    system:'系统',
+    finance:'财务',
+    product:'产品',
+    team:'团队',
+    deal:'交易',
+    marketing:'营销',
+    faq:'常见问题'
+  },
+  // 系统
+  systemes:{
+    merchantname:'商户名称',
+    date:'日期',
+    to:'至',
+    startdate:'开始日期',
+    dateclosed:'结束日期',
+    search:'搜索',
+    export:'导出',
+    devicenumber:'设备号',
+    merchantrate:'商户费率',
+    contractrate:'签约费率',
+    superioragent:'上级代理',
+    commission:'佣金($)',
+    numberofpayments:'支付笔数',
+    numberofpayers:'支付人数',
+    paymentamount:'支付金额($)',
+    // 用户管理
+    enterkeywordsearch:'输入关键字搜索',
+    type:'类型',
+    status:'状态',
+    username:'用户名',
+    phone:'电话',
+    mailbox:'邮箱',
+    usertype:'用户类型',
+    merchantidentification:'商户标识',
+    creationdate:'创建日期',
+
+
+
+
+
+
+
   },
   financeEarnings:{
     title_1:'现金钱包',

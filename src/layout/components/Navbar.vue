@@ -31,12 +31,14 @@
         <el-dropdown-menu slot="dropdown">
           <router-link to="/user/center">
             <el-dropdown-item>
-              个人中心
+              <!-- 个人中心 -->
+              {{$t('navbar.personal')}}
             </el-dropdown-item>
           </router-link>
           <span style="display:block;" @click="open">
             <el-dropdown-item divided>
-              退出登录
+              <!-- 退出登录 -->
+              {{$t('navbar.logout')}}
             </el-dropdown-item>
           </span>
         </el-dropdown-menu>
@@ -59,7 +61,7 @@ import nxLangSelect from '@/components/nx-lang-select/index'
 
 import Logo from './Sidebar/Logo'
 
-import { headerWelcome } from '@/utils/i18n'// 国际化主题名字
+import { fpthome } from '@/utils/i18n'// 国际化主题名字
 export default {
   components: {
     Breadcrumb,
@@ -92,7 +94,7 @@ export default {
     }
   },
   methods: {
-    headerWelcome,
+    fpthome,
     open() {
       this.$confirm('确定注销并退出系统吗？', '提示', {
         confirmButtonText: '确定',
