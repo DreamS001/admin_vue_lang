@@ -1,12 +1,21 @@
 //头部
-export function headerWelcome(hw){
+export function fpthome(hw){
     const hasKey = this.$te('hw.' + hw)
     const translatedTitle = this.$t('hw.' + hw) // $t :this method from vue-i18n, inject in @/lang/index.js
-  
+
     if (hasKey) {
       return translatedTitle
     }
     return hw
+}
+export function systemes(sys){
+  const hasKey = this.$te('hw.' + sys)
+  const translatedTitle = this.$t('hw.' + sys) // $t :this method from vue-i18n, inject in @/lang/index.js
+
+  if (hasKey) {
+    return translatedTitle
+  }
+  return sys
 }
 
 
@@ -22,7 +31,7 @@ export function generateTitle(title) {
   export function generateSkinColor(color) {
     const hasKey = this.$te('skin.' + color)
     const translatedTitle = this.$t('skin.' + color) // $t :this method from vue-i18n, inject in @/lang/index.js
-  
+
     if (hasKey) {
       return translatedTitle
     }

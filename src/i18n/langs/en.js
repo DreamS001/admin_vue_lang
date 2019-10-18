@@ -11,7 +11,78 @@
 const en = {
     // 导航栏
     navbar: {
-      title: 'Welcome'
+      title: 'Welcome',
+      personal:'personal center',
+      logout:'log out',
+      // 顶部标签栏的对应的右击按钮
+      refresh:'refresh',
+      close:'close',
+      closeothers:'Close the other',
+      closeall:'Close all',
+      // 中间四块内容
+      viewdetails:'view details',
+      mydeal:'My Deal',
+      devicenum:'device number',
+      platform:'Platform',
+      myturnover:'My turnover',
+      myearnings:'My Earnings',
+      accumulatedearnings:'accumulated earnings',
+      todayearnings:'Today\'s earnings',
+      todayinvestment:'Today\'s investment',
+      myteam:'My team',
+      person:'person',
+      news:'NEWS',
+      //设备分布的大块
+      eda:'EDA',
+      gmv:'GMV',
+      totaltransactions:'total transactions',
+      totalnumberdevices:'The total number of devices',
+      totalinvestment:'total investment',
+      // 底部联系我们块
+      contactus:'contact us',
+      companyname:'company name',
+      emailaccounts:'Email accounts',
+      // 推广链接块
+      referrallinks:'Referral Links',
+      copy:'copy',
+    },
+    sidebar:{
+      home:'home',
+      system:'system',
+      finance:'finance',
+      product:'product',
+      team:'team',
+      deal:'deal',
+      marketing:'marketing',
+      faq:'FAQ'
+    },
+    systemes:{
+      merchantname:'merchant name',
+      date:'date',
+      to:'to',
+      startdate:'start date',
+      dateclosed :'date closed',
+      search:'search',
+      export:'export',
+      devicenumber:'device number',
+      merchantrate:'Merchant rate',
+      contractrate:'Contract rate',
+      superioragent:'Superior agent',
+      commission:'commission($)',
+      numberofpayments:'Number of payments',
+      numberofpayers:'Number of payers',
+      paymentamount:'Payment amount($)',
+
+      //用户管理
+      enterkeywordsearch:'Enter keyword search',
+      type:'type',
+      status:'status',
+      username:'username',
+      phone:'phone',
+      mailbox:'mailbox',
+      usertype:'user type',
+      merchantidentification:'Merchant identification',
+      creationdate:'Creation date',
     },
     //顶部导航栏下拉框
     popDown:{
@@ -136,6 +207,6 @@ const en = {
       documentation: '文档介绍'
     }
   }
-  
+
 
   export default en;
