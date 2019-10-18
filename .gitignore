@@ -1,0 +1,36 @@
+/.settings
+/bin
+*/target/*
+/logs
+*/out/
+
+# filter config files, except .gitignore
+*.MF
+!.gitignore
+*.iml
+*.exe
+# eclipse ignore
+.project
+.classpath
+# IDEA ignore
+.idea
+.class
+*.class
+*.log
+!application.properties
+
+
+.DS_Store
+node_modules/
+.history/
+dist/
+npm-debug.log
+package-lock.json
+# 忽略使用WebStorm开发时，生成的缓存文件夹
+.idea
+# 忽略使用VSCode开发时，生成的缓存文件夹
+.vscode
+tree.md
+*.idea
+
+elm/

@@ -1,0 +1,169 @@
+#app {
+  // 主体区域
+  .main-container {
+    min-width: 862px;
+    min-height: 100%;
+    transition: margin-left .28s;
+    margin-left: 188px;
+    position: relative;
+    padding-top: 64px;
+    box-sizing: border-box;
+    background: url(../assets/images/bg_home_content.png) no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed
+  }
+  // 侧边栏
+  .sidebar-container {
+    transition: width 0.28s;
+    width: 189px ;
+    height: 100%;
+    position: fixed;
+
+    font-size: 0px;
+    top: 44px;
+    bottom: 0;
+    left: 0;
+    // z-index: 1001;
+    z-index: 99;
+    overflow: hidden;
+    background: url(../assets/images/bg_cbl.png) no-repeat;
+    padding-top: 48px;
+    box-sizing: border-box;
+    //reset element-ui css
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+    .el-scrollbar__bar.is-vertical{
+      right: 0px;
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    }
+    .scrollbar-wrapper {
+      overflow-x: hidden!important;
+      // width:194px;
+      width:210px;
+      .el-scrollbar__view {
+        height: 100%;
+      }
+      /*隐藏滚动条，当IE下溢出，仍然可以滚动*/
+      -ms-overflow-style:none;
+      /*火狐下隐藏滚动条*/
+      overflow:-moz-scrollbars-none;
+    }
+    .is-horizontal {
+      display: none;
+    }
+    a {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
+    .svg-icon {
+      margin-right: 16px;
+    }
+    .el-menu {
+      border: none;
+      height: 100%;
+      width: 100% !important;
+      background-color: transparent !important;
+    }
+    .is-active > .el-submenu__title{
+      // color: #f4f4f5!important;
+    }
+  }
+  // .hideSidebar {
+  //   .sidebar-container {
+  //     width: 36px !important;
+  //   }
+  //   .main-container {
+  //     margin-left: 36px;
+  //   }
+  //   .submenu-title-noDropdown {
+  //     padding-left: 10px !important;
+  //     position: relative;
+  //     .el-tooltip {
+  //       padding: 0 10px !important;
+  //     }
+  //   }
+  //   .el-submenu {
+  //     overflow: hidden;overflow-x
+  //     &>.el-submenu__title {
+  //       padding-left: 10px !important;
+  //       .el-submenu__icon-arrow {
+  //         display: none;
+  //       }
+  //     }
+  //   }
+  //   .el-menu--collapse {
+  //     .el-submenu {
+  //       &>.el-submenu__title {
+  //         &>span {
+  //           height: 0;
+  //           width: 0;
+  //           overflow: hidden;
+  //           visibility: hidden;
+  //           display: inline-block;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  .sidebar-container .nest-menu .el-submenu>.el-submenu__title,
+  .sidebar-container .el-submenu .el-menu-item {
+    min-width: 180px !important;
+    // background-color: $subMenuBg !important;
+    &:hover {
+      background-color: rgba(47,228,255,0.3) !important;
+      border-right: 2px solid #2FE4FF;
+      color: #2FE4FF !important;
+    }
+  }
+  .el-menu--collapse .el-menu .el-submenu {
+    min-width: 180px !important;
+  }
+
+  //适配移动端
+  // .mobile {
+  //   .main-container {
+  //     margin-left: 0px;
+  //   }
+  //   .sidebar-container {
+  //     transition: transform .28s;
+  //     width: 180px !important;
+  //   }
+  //   &.hideSidebar {
+  //     .sidebar-container {
+  //       transition-duration: 0.3s;
+  //       transform: translate3d(-180px, 0, 0);
+  //     }
+  //   }
+  // }
+  .withoutAnimation {
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
+}
+
+.el-menu--vertical{
+  & >.el-menu{
+    .svg-icon{
+      margin-right: 16px;
+    }
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+  /* Webkit内核兼容CSS选择器样式 放到这里 */
+    #app .sidebar-container {
+     width: 190px !important;
+
+    }
+    .el-submenu__icon-arrow{
+      position: absolute;
+      top: 50%;
+      right: 30px !important;
+    }
+  }

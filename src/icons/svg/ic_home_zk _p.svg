@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="8" viewBox="0 0 16 8">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #666;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="ic_home_zk__p.svg" data-name="ic_home_zk _p.svg" class="cls-1" d="M1860,34l8-8h-16Z" transform="translate(-1852 -26)"/>
+</svg>

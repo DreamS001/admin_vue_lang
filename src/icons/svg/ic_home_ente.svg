@@ -1,0 +1,12 @@
+<svg id="ic_home_ente.svg" xmlns="http://www.w3.org/2000/svg" width="11.312" height="6.375" viewBox="0 0 11.312 6.375">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #666;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="矩形_7" data-name="矩形 7" class="cls-1" d="M166.469,156.812l5.657,5.657-0.708.707-5.656-5.657Z" transform="translate(-160.813 -156.813)"/>
+  <path id="矩形_7_拷贝" data-name="矩形 7 拷贝" class="cls-1" d="M166.469,156.812l0.707,0.707-5.657,5.657-0.707-.707Z" transform="translate(-160.813 -156.813)"/>
+</svg>
