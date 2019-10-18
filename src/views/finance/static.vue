@@ -2,22 +2,22 @@
   <div class="wscn-http404-container">
     <div class="nav">
       <div class="block" style="min-width:600px;margin-left: 30px;">
-        <span class="demonstration">自定义查询：</span>
+        <span class="demonstration">{{$t('financeCash.customQuery')}}：</span>
         <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
-        <span class="time" style="margin-left:100px" @click="queryData">查询</span>
-        <span class="time"  @click="exportTable">导出</span>
+        <span class="time" style="margin-left:100px" @click="queryData">{{$t('financeCash.query')}}</span>
+        <span class="time"  @click="exportTable">{{$t('financeCash.export')}}</span>
       </div>
     </div>
     <div style="width:100%!important;margin-top:20px;">
       <el-table :data="list" style="width: 100%!important" :row-class-name="setClassName" :cell-style="finalCellStyle">
-        <el-table-column prop="date" label="日期" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="sta_profit" label="静态钱包收益（$）" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="device_expend" label="购买机器人支出（$）" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="cash_withdraw" label="提现支出（$）" align="center"></el-table-column>
-        <el-table-column label="操作" align="center" min-width="150">
+        <el-table-column prop="date" :label="$t('financeCash.date')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="sta_profit" :label="$t('financeCash.title_3')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="device_expend" :label="$t('financeCash.robot_ex')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="cash_withdraw" :label="$t('financeCash.cash_with')" align="center"></el-table-column>
+        <el-table-column :label="$t('financeCash.operation')" align="center" min-width="150">
           <template slot-scope="scope">
             <!-- <el-button type="expand" size="mini" @click="reveal(scope.$index, scope.row)">查看明细</el-button> -->
-            <div class="ck-btn" @click="reveal(scope.$index, scope.row)"></div>
+            <div class="ck-btn" @click="reveal(scope.$index, scope.row)">{{$t('financeEarnings.detailed')}}</div>
           </template>
         </el-table-column>
       </el-table>
@@ -29,15 +29,15 @@
     <div v-if="FC" class="fuCeng">
       <div>
         <h4>
-          <span>详情</span>
+          <span>{{$t('financeEarnings.detailed')}}</span>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt/>
         </h4>
         <div>
           <el-table :data="lielist" style="width: 100%!important" height="400" :row-class-name="setClassName" :header-row-class-name="handlemyclass" :cell-style="finalCellStyle">
-            <el-table-column prop="date" label="日期" align="center"></el-table-column>
-            <el-table-column prop="sta_profit" label="静态钱包收益（$）" align="center" min-width="170"></el-table-column>
-            <el-table-column prop="device_expend" label="购买机器人支出（$）" align="center" min-width="180"></el-table-column>
-            <el-table-column prop="cash_withdraw" label="提现支出（$）" align="center" min-width="160"></el-table-column>
+            <el-table-column prop="date" :label="$t('financeCash.date')" align="center"></el-table-column>
+            <el-table-column prop="sta_profit" :label="$t('financeCash.title_3')" align="center" min-width="170"></el-table-column>
+            <el-table-column prop="device_expend" :label="$t('financeCash.robot_ex')" align="center" min-width="180"></el-table-column>
+            <el-table-column prop="cash_withdraw" :label="$t('financeCash.cash_with')" align="center" min-width="160"></el-table-column>
           </el-table>
         </div>
       </div>
@@ -383,10 +383,15 @@
   .ck-btn{
     width: 100px;
     height: 30px;
-    background: url('../../assets/images/ic_qb_chankanmingxi.png') no-repeat;
+    background: url('../../assets/images/ic_home_Viewdetails.png') no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
     margin: 0 auto;
+    color: rgba(47, 228, 255, 1);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
 </style>

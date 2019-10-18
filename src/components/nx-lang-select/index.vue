@@ -13,8 +13,15 @@
 
 <script>
 import nxSvgIcon from '@/components/nx-svg-icon/index'
+
+import {switchLang} from '@/api/login'
 export default {
   name: 'nx-lang-select',
+  data(){
+    return {
+      newLang:'en_US'
+    }
+  },
   components: { nxSvgIcon },
   computed: {
     language() {
@@ -26,9 +33,24 @@ export default {
       console.log(lang)
       this.$i18n.locale = lang
       this.$store.dispatch('setLanguage', lang)
-      this.$message({
-        message: 'switch language success',
-        type: 'success'
+      if(lang=='zh'){
+        this.newLang='zh_CN'
+      }else{
+        this.newLang='en_US'
+      }
+      switchLang(this.newLang).then(res=>{
+        console.log(res)
+        if(res.code==200){
+          this.$message({
+            message: 'switch language success',
+            type: 'success'
+          })
+        }else{
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
+        }
       })
     }
   }

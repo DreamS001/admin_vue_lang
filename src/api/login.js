@@ -43,3 +43,11 @@ export function register(data) {
     data
   })
 }
+
+export function switchLang(lang) {
+  return request({
+    url: 'api/i18n?i18n_language='+lang,
+    method: 'get'
+  })
+}
+

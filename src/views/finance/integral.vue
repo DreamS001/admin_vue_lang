@@ -2,26 +2,26 @@
   <div class="wscn-http404-container">
     <div class="nav">
       <div class="block" style="min-width:600px;margin-left: 30px;">
-        <span class="demonstration">自定义查询：</span>
+        <span class="demonstration">{{$t('financeCash.customQuery')}}：</span>
         <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
         <div style="height:15px"></div>
-        <span class="demonstration" style="margin-right:13px;">积分来源：</span>
+        <span class="demonstration" style="margin-right:13px;">{{$t('financeCash.points_source')}}：</span>
         <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1);background: #1888cb ;" v-model="name"/>
         <div style="display:inline-block">
-          <span class="time" style="margin-left:100px" @click="queryData">查询</span>
-          <span class="time"  @click="exportTable">导出</span>
+          <span class="time" style="margin-left:100px" @click="queryData">{{$t('financeCash.query')}}</span>
+          <span class="time"  @click="exportTable">{{$t('financeCash.export')}}</span>
         </div>
 
       </div>
     </div>
     <div style="width:100%!important;margin-top:20px;">
       <el-table :data="list" style="width: 100%!important" :row-class-name="setClassName" :cell-style="finalCellStyle">
-        <el-table-column prop="credit_dest_id" label="积分来源" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="investor_id" label="资方标识" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="old_credit" label="原有积分" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="new_credit" label="现有积分" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="credit_increase" label="积分增长" align="center"></el-table-column>
-        <el-table-column style="color:red" prop="create_time" label="日期" align="center" >
+        <el-table-column prop="credit_dest_id" :label="$t('financeCash.points_source')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="investor_id" :label="$t('financeCash.identification')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="old_credit" :label="$t('financeCash.original_integral')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="new_credit" :label="$t('financeCash.existing_integral')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="credit_increase" :label="$t('financeCash.integral_growth')" align="center"></el-table-column>
+        <el-table-column style="color:red" prop="create_time" :label="$t('financeCash.date')" align="center" >
           <template slot-scope="scope">
             <div>
               {{scope.row.create_time | dateFormat}}

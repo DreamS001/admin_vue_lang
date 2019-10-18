@@ -5,11 +5,11 @@
  * DEBUG: debug状态
  * cancleHTTP: 取消请求头设置
  */
-let baseUrl = '/api';
+let baseUrl = '/auth';
 if (process.env.NODE_ENV == 'development') {
     // baseUrl = "http://shipz.jie360.com.cn";
     // baseUrl = "http://pc.jie360.com.cn";
-    baseUrl="/api"
+    baseUrl="/auth"
 }else if(process.env.NODE_ENV == 'testing'){
     baseUrl = "http://investor.jie360.com.cn";
     // baseUrl = "http://shipz.jie360.com.cn";
