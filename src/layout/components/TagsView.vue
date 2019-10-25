@@ -28,7 +28,10 @@
 import ScrollPane from '@/components/ScrollPane'
 import path from 'path'
 import { constantRouterMap } from '@/router/routers'
-import { fpthome } from '@/utils/i18n'
+import Cookies from 'js-cookie'
+var lang=Cookies.get('language') || 'en';
+
+import { fpthome } from '@/utils/i18n'// 国际化主题名字
 export default {
   components: { ScrollPane },
   data() {
@@ -61,6 +64,9 @@ export default {
   mounted() {
     this.initTags()
     this.addViewTags()
+  },
+  created() {
+    console.log(this.$store.state.tagsView.visitedViews)
   },
   methods: {
     fpthome,
@@ -100,6 +106,14 @@ export default {
     addViewTags() {
       const { name } = this.$route
       if (name) {
+        console.log(this.$route)
+        if(this.$route.meta.title=='个人中心'){
+          if(lang=='en'){
+            this.$route.meta.title='Personal Center'
+          }else{
+            this.$route.meta.title='个人中心'
+          }
+        }
         this.$store.dispatch('addView', this.$route)
       }
       return false

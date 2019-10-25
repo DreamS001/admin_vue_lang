@@ -17,6 +17,9 @@
       <el-form-item label="菜单名称" prop="name">
         <el-input v-model="form.name" placeholder="名称" style="width: 460px;"/>
       </el-form-item>
+      <el-form-item label="英文名称" prop="name">
+        <el-input v-model="form.enName" placeholder="英文名称" style="width: 460px;"/>
+      </el-form-item>
       <el-form-item label="菜单排序" prop="sort">
         <el-input-number v-model.number="form.sort" :min="0" :max="999" controls-position="right" style="width: 460px;"/>
       </el-form-item>
@@ -62,10 +65,13 @@ export default {
   data() {
     return {
       loading: false, dialog: false, menus: [],
-      form: { name: '', sort: 999, path: '', component: '', iframe: 'false', roles: [], pid: 0, icon: '',hidden: 'true' },
+      form: { name: '',enName:'', sort: 999, path: '', component: '', iframe: 'false', roles: [], pid: 0, icon: '',hidden: 'true' },
       rules: {
         name: [
           { required: true, message: '请输入名称', trigger: 'blur' }
+        ],
+        enName:[
+          { required: true, message: '请输入英文名称', trigger: 'blur' }
         ],
         sort: [
           { required: true, message: '请输入序号', trigger: 'blur', type: 'number' }

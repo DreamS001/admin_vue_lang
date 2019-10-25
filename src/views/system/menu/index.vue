@@ -28,6 +28,11 @@
     <eForm ref="form" :is-add="isAdd"/>
     <!--表格渲染-->
     <tree-table :data="data" :expand-all="expand" :columns="columns"  :row-class-name="setClassName">
+      <el-table-column prop="title" label="enName" align="center" width="80px">
+        <template slot-scope="scope">
+          <span>{{scope.row.enName}}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="80px">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
@@ -142,7 +147,7 @@ export default {
       this.isAdd = false
       const _this = this.$refs.form
       _this.getMenus()
-      _this.form = { id: data.id, component: data.component, name: data.name, sort: data.sort, pid: data.pid, path: data.path, iframe: data.iframe.toString(),hidden: data.hidden.toString(), roles: [], icon: data.icon }
+      _this.form = { id: data.id, component: data.component, name: data.name,enName:data.enName, sort: data.sort, pid: data.pid, path: data.path, iframe: data.iframe.toString(),hidden: data.hidden.toString(), roles: [], icon: data.icon }
       _this.dialog = true
     },
     changExpand() {

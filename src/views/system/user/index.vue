@@ -66,9 +66,11 @@
 					</el-table-column>
           <el-table-column :label="$t('systemes.status')" align="center">
             <template slot-scope="scope">
-              <div v-for="item in dicts" :key="item.id">
+              <!-- <div v-for="item in dicts" :key="item.id">
                 <el-tag v-if="scope.row.enabled.toString() === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
-              </div>
+              </div> -->
+              <el-tag v-if="scope.row.enabled.toString() === 'true'">{{$t('systemes.activation')}}</el-tag>
+              <el-tag v-else>{{$t('systemes.lock')}}</el-tag>
             </template>
           </el-table-column>
           <el-table-column :show-overflow-tooltip="true" prop="createTime" :label="$t('systemes.creationdate')">
@@ -124,7 +126,11 @@ import eForm from './form'
 import { getToken } from "@/utils/auth";
 
 import zfIndex from '../dept/index'
-import { systemes } from '@/utils/i18n'
+import {systemes} from '@/utils/i18n'
+
+import Cookies from 'js-cookie'
+var lang=Cookies.get('language') || 'en';
+
 export default {
   components: { eForm,zfIndex },
   mixins: [initData, initDict],
@@ -141,12 +147,12 @@ export default {
       },
 
       queryTypeOptions: [
-        { key: 'username', display_name: '用户名' },
-        { key: 'email', display_name: '邮箱' }
+        { key: 'username', display_name: 'username' },
+        { key: 'email', display_name: 'mailbox' }
       ],
       enabledTypeOptions: [
-        { key: 'true', display_name: '激活' },
-        { key: 'false', display_name: '锁定' }
+        { key: 'true', display_name: 'activation' },
+        { key: 'false', display_name: 'lock' }
       ],
 
     }
@@ -156,8 +162,16 @@ export default {
     this.$nextTick(() => {
       this.init()
       // 加载数据字典
-      this.getDict('user_status')
+      // this.getDict('user_status')
+
     })
+    if (lang=='en') {
+      this.queryTypeOptions=[{ key: 'username', display_name: 'username' },{ key: 'email', display_name: 'mailbox' }]
+      this.enabledTypeOptions=[{ key: 'true', display_name: 'activation' },{ key: 'false', display_name: 'lock' }]
+    }else{
+      this.queryTypeOptions=[{ key: 'username', display_name: '用户名' },{ key: 'email', display_name: '邮箱' }]
+      this.enabledTypeOptions=[{ key: 'true', display_name: '激活' },{ key: 'false', display_name: '锁定' }]
+    }
   },
   mounted: function() {
     const that = this
@@ -166,7 +180,7 @@ export default {
     }
   },
   methods: {
-    systemes,
+    systemes,//
     parseTime,
     checkPermission,
     beforeInit() {
@@ -188,6 +202,7 @@ export default {
         this.$refs[id].doClose()
         this.dleChangePage()
         this.init()
+
         this.$notify({
           title: '删除成功',
           type: 'success',
@@ -380,7 +395,7 @@ export default {
   .el-tag{
     height: 22px;
     line-height: 22px;
-    color: #fff !important;
+    /* color: #fff !important; */
   }
   .el-button--primary{
      /* width: 110px;

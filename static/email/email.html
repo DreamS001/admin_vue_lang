@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+    <style>
+      @page {
+      margin: 0;
+      }
+      *{
+        margin:0;
+        padding:0;
+      }
+      html,body{
+        width:100%;
+        height:auto;
+      }
+      .main{
+        margin:0 auto;
+        width:750px;
+        min-width: 750px;
+        /* height:1180px; */
+      }
+      .main-box1{
+
+        /* width:7.5rem; */
+        width: 750px;
+        height:311px;
+      }
+      .main-box1>img{
+        width:750px;
+        height:311px;
+        display: block;
+      }
+      .main-box2{
+        /* width:6.9rem; */
+        width:100%;
+        /* height:0.6rem; */
+        /* margin:0.37rem 0.32rem 0; */
+        padding: 37px 32px 0;
+        box-sizing: border-box;
+      }
+      .main-box2>p:nth-of-type(1){
+        width:690px;
+        margin:0;
+        font-size:28px;
+        margin-bottom:29px;
+        font-family:PingFang SC;
+        font-weight:bold;
+        color:rgba(51,51,51,1);
+      }
+      .main-box2>p:nth-of-type(2){
+        width:690px;
+        margin:0;
+        height:73px;
+        font-size:28px;
+        font-family:PingFang SC;
+        font-weight:bold;
+        color:rgba(51,51,51,1);
+      }
+      .code{
+        width:690px;
+        height:60px;
+        margin: 40px auto 0;
+        display: inline-block;
+        background:rgba(236,236,236,1);
+
+
+      }
+      .code>p{
+        width:690px;
+        height:60px;
+        font-size:22px;
+        font-family:PingFang SC;
+        font-weight:bold;
+        color:rgba(51,51,51,1);
+        margin:0;
+        line-height: 60px;
+        text-align: center;
+      }
+      .main-box2-d{
+
+      }
+      .main-box2-d>p{
+        margin:0;
+        font-size:28px;
+        font-family:PingFang SC;
+        font-weight:bold;
+        font-style:italic;
+        color:rgba(51,51,51,1);
+      }
+      .main-box2-d>p:nth-of-type(1){
+        margin-top:200px;
+      }
+      .logo{
+        width:120px;
+        height:58px;
+        margin: 49px auto 0;
+      }
+      .logo>img{
+        width:120px;
+        height:58px;
+        display: block;
+      }
+      .footer{
+        /* width:6.9rem;
+        height:0.19rem; */
+        font-size:18px;
+        font-family:PingFang SC;
+        /* font-weight:500; */
+        color:rgba(51,51,51,1);
+        margin:0;
+        margin-top:30px;
+        margin-bottom:30px;
+        text-align: center;
+      }
+    </style>
+  <script>
+    // ! function () {
+    //     function t(t) {
+    //     return this.config = t, this
+    //     t.prototype = {
+    //     reset: function () {
+    //     var t = Math.min(document.documentElement.clientWidth, 750) / 750 * 100;
+    //     document.documentElement.style.fontSize = t + "px";
+    //     var e = parseFloat(window.getComputedStyle(document.documentElement).fontSize),
+    //     n = t / e;
+    //     /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) || document.documentElement
+    //     .setAttribute("flatform", "android"), 1 != n && (document.documentElement.style
+    //     .fontSize = t * n + "px")
+    //     }
+    //     }, window.Adapter = new t, window.Adapter.reset(), window.onload = function () {
+    //     window.Adapter.reset()
+    //     }, window.onresize = function () {
+    //     window.Adapter.reset()
+    //     }
+    //   }();
+  </script>
+</head>
+<body>
+  <div class="main">
+    <div class="main-box1">
+      <img src="./images/banner .png" alt="">
+    </div>
+    <div class="main-box2">
+      <p>Dear members.</p>
+      <p>You are applying for mailbox verification.Your verification code is (valid for five minutes):</p>
+      <span class="code">
+        <p>123456</p>
+      </span>
+      <div class="main-box2-d">
+        <p>Thanks,</p>
+        <p>The FTP Team</p>
+      </div>
+      <div class="logo">
+          <img src="./images/logo.png" alt="">
+      </div>
+      <p class="footer">Copyright 2019 FACE-PAY 资方后台管理系统 All Rights Reserved</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -2,38 +2,38 @@
   <div class="wscn-http404-container">
     <div class="nav">
       <div class="block" style="min-width:850px;font-size:14px;margin-left: 30px;">
-        <span class="demonstration">{{$t('financeCash.customQuery')}}：</span>
+        <span class="demonstration">自定义查询：</span>
         <el-date-picker v-model="value6" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" range-separator="至" @change="timeChange"/>
         <div style="height:15px"></div>
 
-        <span class="demonstration" v-if="this.button == '切换提现'" style="margin-right:29px;">{{$t('financeCash.serial_number')}}：</span>
-        <span class="demonstration" v-else style="margin-right:29px;">{{$t('financeCash.serial_number')}}：</span>
+        <span class="demonstration" v-if="this.button == '切换提现'" style="margin-right:29px;">流水号：</span>
+        <span class="demonstration" v-else style="margin-right:29px;">流水号：</span>
         <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1);background: #1888cb"  v-model="input1"/>
-        <span class="time" style="margin-left:100px;" @click="queryData">{{$t('financeCash.query')}}</span>
-        <span class="time" @click="exportTable">{{$t('financeCash.export')}}</span>
+        <span class="time" style="margin-left:100px;" @click="queryData">查询</span>
+        <span class="time" @click="exportTable">导出</span>
         <span class="time" @click="butt">{{button}}</span>
       </div>
     </div>
     <div v-if="topup" style="width:100%!important;margin-top:20px">
       <el-table :data="withdrawlist" style="width: 100%!important" :row-class-name="setClassName" :header-row-class-name="handlemyclass">
-        <el-table-column prop="merchant_order_id" :label="$t('financeCash.serial_number')" align="center"></el-table-column>
+        <el-table-column prop="merchant_order_id" label="流水号" align="center"></el-table-column>
         <!-- <el-table-column prop="dynamic" label="订单类型"></el-table-column> -->
-        <el-table-column prop="create_time" :label="$t('financeCash.date_of_presentation')" align="center"></el-table-column>
-        <el-table-column prop="withdraw_amount" :label="$t('financeCash.withdrawal_amount')" align="center"></el-table-column>
+        <el-table-column prop="create_time" label="提现日期" align="center"></el-table-column>
+        <el-table-column prop="withdraw_amount" label="提现金额（$）" align="center"></el-table-column>
         <!-- <el-table-column prop="name" label="资方名称"></el-table-column> -->
-        <el-table-column prop="withdraw_token_id" :label="$t('financeCash.address')" align="center"></el-table-column>
-        <el-table-column prop="order_status" :label="$t('financeCash.approval_status')" align="center">
+        <el-table-column prop="withdraw_token_id" label="地址" align="center"></el-table-column>
+        <el-table-column prop="order_status" label="审核状态" align="center">
           <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.order_status==300">{{$t('financeCash.sh_success')}}</el-tag>
-            <el-tag type="danger" v-if="scope.row.order_status==200">{{$t('financeCash.sh_fail')}}</el-tag>
-            <el-tag type v-if="scope.row.order_status==100" style="width:90px;height:30px;border:1px solid rgba(24, 144, 255, 1);color:rgba(24, 144, 255, 1);">{{$t('financeCash.in_audit')}}</el-tag>
+            <el-tag type="success" v-if="scope.row.order_status==300">审核成功</el-tag>
+            <el-tag type="danger" v-if="scope.row.order_status==200">审核失败</el-tag>
+            <el-tag type v-if="scope.row.order_status==100" style="width:90px;height:30px;border:1px solid rgba(24, 144, 255, 1);color:rgba(24, 144, 255, 1);">审核中</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" :label="$t('financeCash.remark')" align="center"></el-table-column>
-        <el-table-column :label="$t('financeCash.operation')" width="300" align="center">
+        <el-table-column prop="remark" label="备注" align="center"></el-table-column>
+        <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <span class="s-btn" @click="reveal(scope.$index,scope.row)">{{$t('financeCash.adopt')}}</span>
-            <span class="s-btn" @click="refuse(scope.$index,scope.row);getType(1)">{{$t('financeCash.reject')}}</span>
+            <span class="s-btn" @click="reveal(scope.$index,scope.row)">通过</span>
+            <span class="s-btn" @click="refuse(scope.$index,scope.row);getType(1)">驳回</span>
           </template>
         </el-table-column>
       </el-table>
@@ -43,25 +43,25 @@
     </div>
     <div v-if="withdraw" style="width:100%!important;margin-top:20px">
       <el-table :data="topuplist" style="width: 100%!important" :row-class-name="setClassName" :header-row-class-name="handlemyclass">
-        <el-table-column prop="merchant_order_id" :label="$t('financeCash.serial_number')" align="center"></el-table-column>
-        <el-table-column prop="create_time" :label="$t('financeCash.recharge_date')" align="center"></el-table-column>
-        <el-table-column prop="charge_amount" :label="$t('financeCash.recharge_amount')" align="center"></el-table-column>
-        <el-table-column prop="third_trade_id" :label="$t('financeCash.address')" align="center"></el-table-column>
-        <el-table-column prop="order_status" :label="$t('financeCash.approval_status')" align="center">
+        <el-table-column prop="merchant_order_id" label="流水号" align="center"></el-table-column>
+        <el-table-column prop="create_time" label="充值日期" align="center"></el-table-column>
+        <el-table-column prop="charge_amount" label="充值金额（$）" align="center"></el-table-column>
+        <el-table-column prop="third_trade_id" label="地址" align="center"></el-table-column>
+        <el-table-column prop="order_status" label="审核状态" align="center">
           <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.order_status==300">{{$t('financeCash.sh_success')}}</el-tag>
-            <el-tag type="danger" v-if="scope.row.order_status==200">{{$t('financeCash.sh_fail')}}</el-tag>
-            <el-tag type v-if="scope.row.order_status==100" style="width:90px;height:30px;border:1px solid rgba(24, 144, 255, 1);color:rgba(24, 144, 255, 1);">{{$t('financeCash.in_audit')}}</el-tag>
+            <el-tag type="success" v-if="scope.row.order_status==300">审核成功</el-tag>
+            <el-tag type="danger" v-if="scope.row.order_status==200">审核失败</el-tag>
+            <el-tag type v-if="scope.row.order_status==100" style="width:90px;height:30px;border:1px solid rgba(24, 144, 255, 1);color:rgba(24, 144, 255, 1);">审核中</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" :label="$t('financeCash.remark')" align="center"></el-table-column>
+        <el-table-column prop="remark" label="备注" align="center"></el-table-column>
 
-        <el-table-column :label="$t('financeCash.operation')" width="300" align="center">
+        <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
             <!-- <span class="s-btn" @click="handleClick(scope.row)">通过</span>
             <span class="s-btn" @click="refuse(scope.row)">驳回</span> -->
-            <span class="s-btn" @click="reveal(scope.$index,scope.row)">{{$t('financeCash.adopt')}}</span>
-            <span class="s-btn" data-type="1" @click="refuse(scope.$index,scope.row);getType(1)">{{$t('financeCash.reject')}}</span>
+            <span class="s-btn" @click="reveal(scope.$index,scope.row)">通过</span>
+            <span class="s-btn" data-type="1" @click="refuse(scope.$index,scope.row);getType(1)">驳回</span>
           </template>
         </el-table-column>
       </el-table>
@@ -76,15 +76,15 @@
         <h4>
           <!-- <span>详情</span>
           <img @click="contribute" src="../../assets/logo/cuo.png"/> -->
-          <div><span>{{$t('financeCash.reasons_for_remarks')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div><span>备注理由</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
         <div class="ask-box">
-          <textarea placeholder="" v-model="rowDesc"></textarea>
+          <textarea placeholder="请输入备注理由" v-model="rowDesc"></textarea>
         </div>
         <div class="bottom-btn">
-          <span @click="voting">{{$t('financeEarnings.sure')}}</span>
-          <span @click="contribute">{{$t('financeEarnings.cancel')}}</span>
+          <span @click="voting">确定</span>
+          <span @click="contribute">取消</span>
         </div>
       </div>
     </div>

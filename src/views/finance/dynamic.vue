@@ -2,10 +2,19 @@
   <div class="wscn-http404-container " style="background-color:transparent !important">
     <div class="nav">
       <div class="block" style="min-width:600px;margin-left: 30px;">
-        <span class="demonstration">{{$t('financeCash.customQuery')}}：</span>
-        <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
-        <span class="time" style="margin-left:100px" @click="queryDate">{{$t('financeCash.query')}}</span>
-        <span class="time" @click="exportTable">{{$t('financeCash.export')}}</span>
+        <span class="demonstration">
+          <!-- 自定义查询： -->
+          {{$t('financeCash.custom_query')}}：
+        </span>
+        <el-date-picker v-model="value6" type="daterange" size="mini" :range-separator="$t('financeCash.to')" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
+        <span class="time" style="margin-left:100px" @click="queryDate">
+          <!-- 查询 -->
+          {{$t('financeCash.query')}}
+        </span>
+        <span class="time" @click="exportTable">
+          <!-- 导出 -->
+          {{$t('financeCash.export')}}
+        </span>
       </div>
     </div>
     <div style="width:100%!important;margin-top:20px">
@@ -17,7 +26,10 @@
         <el-table-column :label="$t('financeCash.operation')" min-width="180" align="center">
           <template slot-scope="scope">
             <!-- <el-button type="expand" size="mini" @click="reveal(scope.$index, scope.row)">查看明细</el-button> -->
-            <div class="ck-btn" @click="reveal(scope.$index, scope.row)">{{$t('financeEarnings.detailed')}}</div>
+            <div class="ck-btn" @click="reveal(scope.$index, scope.row)">
+              <!-- 查看明细 -->
+              {{$t('financeCash.detailed')}}
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -31,7 +43,13 @@
         <h4>
           <!-- <span>详情</span>
           <img @click="contribute" src="../../assets/logo/cuo.png"/> -->
-          <div><span>{{$t('financeEarnings.detailed')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div>
+            <span>
+              <!-- 查看明细 -->
+              {{$t('financeCash.detailed')}}
+            </span>
+            <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
+          </div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
         <div>
@@ -53,8 +71,9 @@
   import { cash, cashlist, cashquery } from '@/api/finance'
   import moment from 'moment'
   import { formatDate } from '../../utils/date.js'
+  import Cookies from 'js-cookie'
+  var lang=Cookies.get('language') || 'en';
 
-import { financeEarnings,financeCash } from '@/utils/i18n'// 国际化主题名字
   export default {
     data() {
       return {
@@ -67,14 +86,15 @@ import { financeEarnings,financeCash } from '@/utils/i18n'// 国际化主题名�
         endDatePlaceHolder: '',
         beginDate: '',
         endDate: '',
-        ttex: '查看详情',
         lielist: [],
         FC: false,
         allList: [],
         pageSize1: 2147483647,
         clickQueryDate: false,
         selectTime: false,
-        downloadLoading: false
+        downloadLoading: false,
+        eHeader:[],
+        eName:'',
       }
     },
     created() {
@@ -86,8 +106,6 @@ import { financeEarnings,financeCash } from '@/utils/i18n'// 国际化主题名�
       this.request()
     },
     methods: {
-      financeCash,
-      financeEarnings,
       // setClassName({ row, index }) {
       //   return row.expand ? 'expand' : ''
       // },
@@ -122,7 +140,7 @@ import { financeEarnings,financeCash } from '@/utils/i18n'// 国际化主题名�
         }
         if (columnIndex == 4) {
           return {
-            color: '#FF7B61'
+            color: '#FFF'
           }
         }
         if (columnIndex == 5) {
@@ -178,6 +196,15 @@ import { financeEarnings,financeCash } from '@/utils/i18n'// 国际化主题名�
         return jsonData.map(v => filterVal.map(j => v[j]))
       },
       exportTable() {
+        let _this = this;
+        if(lang=='en'){
+          _this.eHeader=['Date', 'Dynamic wallet revenue($)', 'Robot purchase expense（$）', 'Cash withdrawals（$）']
+          _this.eName='Dynamic income Excel'
+
+        }else{
+          _this.eHeader= ['日期', '动态钱包收益($)', '购买机器人支出($)', '提现支出($)']
+          _this.eName='动态收益excel'
+        }
         cashquery(this.pageNo, this.pageSize1, this.beginDate, this.endDate).then(res => {
           if(res.code==200){
             this.allList = eval(res.data.list)
@@ -185,11 +212,11 @@ import { financeEarnings,financeCash } from '@/utils/i18n'// 国际化主题名�
             const date = JSON.parse(JSON.stringify(this.allList))
             require.ensure([], () => {
               const { export_json_to_excel } = require('@/utils/Export2Excel.js') // 引入文件
-              const tHeader = ['日期', '动态钱包收益($)', '购买机器人支出($)', '提现支出($)'] // 将对应的属性名转换成中文
+              const tHeader = _this.eHeader // 将对应的属性名转换成中文
               const filterVal = ['date', 'act_profit',  'device_expend', 'cash_withdraw'] // table表格中对应的属性名
               const list = date // 想要导出的数据
               const data = this.formatJson(filterVal, list)
-              export_json_to_excel(tHeader, data, '现金钱包excel')
+              export_json_to_excel(tHeader, data, _this.eName)
             })
           }
         })
@@ -401,14 +428,13 @@ import { financeEarnings,financeCash } from '@/utils/i18n'// 国际化主题名�
   .ck-btn{
     width: 100px;
     height: 30px;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    font-size: 14px;
     background: url('../../assets/images/ic_home_Viewdetails.png') no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
     margin: 0 auto;
-    color: rgba(47, 228, 255, 1);
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 </style>

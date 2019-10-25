@@ -580,7 +580,7 @@
     border-radius: 0;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    color: #fff !important;
+    // color: #fff !important;
     white-space: nowrap;
   }
 </style>

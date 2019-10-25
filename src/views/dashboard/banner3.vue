@@ -3,7 +3,10 @@
     <div class="footer">
       <div class="list-f">
         <h5>
-          <span>{{$t('navbar.contactus')}}</span>
+          <span>
+            <!-- 联系我们 -->
+          {{$t('navbar.contactus')}}
+          </span>
           <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
         </h5>
         <p>
@@ -17,12 +20,18 @@
       </div>
       <div class="list-f">
         <h5>
-          <span>{{$t('navbar.referrallinks')}}</span>
+          <span>
+            <!-- 推广链接 -->
+            {{$t('navbar.referrallinks')}}
+          </span>
           <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
         </h5>
         <p style="display: flex;justify-content: space-between;align-items: center">
           <span class="tg-url">{{Url}}</span>
-          <span class="copy" :data-clipboard-text="Url" @click="copyUrl">{{$t('navbar.copy')}}</span>
+          <span class="copy" :data-clipboard-text="Url" @click="copyUrl">
+            <!-- 复制 -->
+            {{$t('navbar.copy')}}
+          </span>
         </p>
       </div>
     </div>
@@ -35,7 +44,7 @@ require("echarts/theme/macarons"); // echarts theme
 import { debounce } from "@/utils";
 import { getChartData , getUrl } from "@/api/visits";
 import {foot}  from "@/api/map";
-import { fpthome } from '@/utils/i18n'
+import {fpthome} from '@/utils/i18n'
 export default {
   props: {
     className: {
@@ -64,6 +73,7 @@ export default {
     };
   },
   mounted() {
+    fpthome,
      foot().then(res => {
        if(res.code==200){
         var data=JSON.parse(res.data.data)
@@ -88,7 +98,6 @@ export default {
     })
   },
   methods: {
-    fpthome,
     copyUrl(){
 			let _this = this;
      let clipboard = new this.clipboard(".copy");

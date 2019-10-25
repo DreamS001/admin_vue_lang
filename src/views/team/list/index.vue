@@ -1,7 +1,7 @@
 <template>
   <div class="app-container" style="padding:0;">
     <!--form 组件-->
-    <eForm ref="form" :is-add="isAdd" :dicts="dicts"/>
+    <!-- <eForm ref="form" :is-add="isAdd" :dicts="dicts"/> -->
     <el-row :gutter="20">
       <!--部门数据-->
       <!-- <el-col :xs="7" :sm="6" :md="4" :lg="4" :xl="4">
@@ -17,38 +17,38 @@
           <!-- 搜索 -->
         <div class="nav" style="margin-bottom:10px;">
           <div class="block" style="min-width:850px;font-size:14px;margin-left: 30px;">
-              <span class="demonstration">自定义查询：</span>
-              <el-date-picker v-model="value6" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" range-separator="至" @change="timeChange"/>
-              <span class="demonstration" style="margin-left:60px;">会员编号：</span>
+              <span class="demonstration" style="width:160px;display: inline-block;">{{$t('financeCash.custom_query')}}：</span>
+              <el-date-picker v-model="value6" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" :range-separator="$t('financeCash.to')" @change="timeChange"/>
+              <span class="demonstration" style="margin-left:60px;width:160px;display: inline-block;">{{$t('financeCash.membership_number')}}：</span>
               <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1)" v-model="userId" />
               <div style="height:15px"></div>
 
               <!-- <span class="demonstration" v-if="this.button == '切换提现'" style="margin-right:29px;">流水号：</span> -->
-              <span class="demonstration" style="margin-right:14px;">会员名称：</span>
+              <span class="demonstration" style="width:160px;display: inline-block;">{{$t('financeCash.member_name')}}：</span>
               <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1)" v-model="input1"/>
-              <span class="demonstration" style="margin-left:60px;">联系方式：</span>
+              <span class="demonstration" style="margin-left:60px;width:160px;display: inline-block;">{{$t('financeCash.contact_information')}}：</span>
               <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1)" v-model="userPhone" />
               <div style="display:inline-block;margin-top:10px">
-                <span class="time" style="margin-left:100px;" @click="searchData">查询</span>
-                <span class="time" @click="download">导出</span>
+                <span class="time" style="margin-left:100px;" @click="searchData">{{$t('financeCash.query')}}</span>
+                <span class="time" @click="download">{{$t('financeCash.export')}}</span>
               </div>
             </div>
         </div>
         <!--表格渲染-->
         <el-table  :data="userData" :row-class-name="setClassName" style="width: 100%;">
-          <el-table-column :show-overflow-tooltip="true" prop="createTime" label="日期" align="center">
+          <el-table-column :show-overflow-tooltip="true" prop="createTime" :label="$t('financeCash.date')" align="center">
             <template slot-scope="scope">
               <span>{{ parseTime(scope.row.create_time) }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="会员编号" align="center">
+          <el-table-column :label="$t('financeCash.membership_number')" align="center">
             <template slot-scope="scope">
               <div>{{ scope.row.id}}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="username" label="会员名称" align="center"/>
-          <el-table-column prop="phone" label="联系方式" align="center"/>
-          <el-table-column label="邮箱" align="center">
+          <el-table-column prop="username" :label="$t('financeCash.member_name')" align="center"/>
+          <el-table-column prop="phone" :label="$t('financeCash.contact_information')" align="center"/>
+          <el-table-column :label="$t('systemes.mailbox')" align="center">
             <template slot-scope="scope">
               <div>{{ scope.row.email }}</div>
             </template>
@@ -59,12 +59,12 @@
               <div>{{ scope.row.offline_price==null?0:scope.row.offline_price }}/台</div>
             </template>
           </el-table-column> -->
-          <el-table-column label="投资金额（$）" align="center">
+          <el-table-column :label="$t('financeCash.investment_amount')" align="center">
             <template slot-scope="scope">
               <div>{{ scope.row.total_amount }}</div>
             </template>
           </el-table-column>
-          <el-table-column label="当前余额（$）" align="center">
+          <el-table-column :label="$t('financeCash.current_balance')" align="center">
             <template slot-scope="scope">
               <div>{{ scope.row.cash_amount }}</div>
             </template>
@@ -77,7 +77,7 @@
             </template>
           </el-table-column>-->
  <!-- v-if="checkPermission(['ADMIN','USER_ALL','USER_EDIT','USER_DELETE'])" -->
-          <el-table-column label="操作" width="260" align="center">
+          <el-table-column :label="$t('financeCash.operation')" width="260" align="center">
             <template slot-scope="scope">
               <!-- <el-button
                 v-permission="['ADMIN','USER_ALL','USER_EDIT']"
@@ -105,7 +105,7 @@
                 </div>
                 <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini"/>
               </el-popover> -->
-              <div class="check-detail" size="mini" @click="reveal(scope.$index, scope.row)">查看详情</div>
+              <div class="check-detail" size="mini" @click="reveal(scope.$index, scope.row)">{{$t('financeCash.viewdetails')}}</div>
             </template>
           </el-table-column>
         </el-table>
@@ -170,15 +170,15 @@
         <h4>
           <!-- <span>详情</span>
           <img @click="contribute" src="../../assets/logo/cuo.png"/> -->
-          <div><span>查看详情</span><img src="../../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div><span>{{$t('financeCash.viewdetails')}}</span><img src="../../../assets/images/img_jianbian.png" alt="" srcset=""></div>
           <img @click="contribute" src="../../../assets/logo/cuo.png" alt />
         </h4>
         <div>
           <el-table :data="userList" style="width: 100%!important" height="400"  :row-class-name="setClassName" :header-row-class-name="handlemyclass" :cell-style="finalCellStyle">
-            <el-table-column prop="username" label="会员" align="center"></el-table-column>
-            <el-table-column prop="id" label="会员编号" align="center"></el-table-column>
-            <el-table-column prop="amount" label="投资金额（$）" align="center"></el-table-column>
-            <el-table-column prop="num" label="团队人数（人）" align="center"></el-table-column>
+            <el-table-column prop="username" :label="$t('financeCash.member')" align="center"></el-table-column>
+            <el-table-column prop="id" :label="$t('financeCash.membership_number')" align="center"></el-table-column>
+            <el-table-column prop="amount" :label="$t('financeCash.investment_amount')" align="center"></el-table-column>
+            <el-table-column prop="num" :label="$t('financeCash.team_number')" align="center"></el-table-column>
           </el-table>
         </div>
       </div>
@@ -189,7 +189,7 @@
 <script>
   import checkPermission from '@/utils/permission'
   import initData from '@/mixins/initData'
-  import initDict from '@/mixins/initDict'
+  // import initDict from '@/mixins/initDict'
   import { del } from '@/api/user'
   import { getDepts } from '@/api/dept'
   import { getAll } from '@/api/role'
@@ -200,9 +200,13 @@
 
   import { getUserList } from '@/api/data'
   import { persAll,detail } from "@/api/team";
+import { financeCash } from '@/utils/i18n'// 国际化主题名字
+import Cookies from 'js-cookie'
+var lang=Cookies.get('language') || 'en';
   export default {
     components: { eForm },
-    mixins: [initData, initDict],
+    mixins: [initData],
+    // mixins: [initData, initDict],
     props: ['valtext'],
     data() {
       return {
@@ -267,7 +271,7 @@
       this.$nextTick(() => {
         this.init()
         // 加载数据字典
-        this.getDict('user_status')
+        // this.getDict('user_status')
       })
       persAll().then(res => {
         console.log(res);
@@ -471,40 +475,72 @@
             console.log(res)
             this.userData=res.data.list
             this.total=res.data.total
+            // let date = JSON.parse(JSON.stringify(this.userData));
             // 转换时间戳
-            res.list.forEach((v, i) => {
+            this.userData.forEach((v, i) => {
 
-              res.list[i].create_time = moment(res.list[i].create_time).format("YYYY-MM-DD hh:mm:ss");
+              this.userData[i].create_time = moment(this.userData[i].create_time).format("YYYY-MM-DD hh:mm:ss");
 
             });
-            require.ensure([], () => {
-              const { export_json_to_excel } = require("@/utils/Export2Excel.js"); //引入文件
-              const tHeader = [
-                "日期",
-                "会员编号",
-                "会员名称",
-                "联系方式",
-                "邮箱",
-                "下线",
-                "投资金额（$）",
-                "当前余额（$）"
-              ]; //将对应的属性名转换成中文
-              // const tHeader = [];
-              const filterVal = [
-                "create_time",
-                "id",
-                "username",
-                "phone",
-                "email",
-                "offline_price",
-                "total_amount",
-                "cash_amount"
-              ]; //table表格中对应的属性名
-              const list = res.list; //想要导出的数据
-              console.log(res.list+"ad")
-              const data = this.formatJson(filterVal, list);
-              export_json_to_excel(tHeader, data, "网络excel");
-            });
+            if(lang=='en'){
+                require.ensure([], () => {
+                const { export_json_to_excel } = require("@/utils/Export2Excel.js"); //引入文件
+                const tHeader = [
+                  "Date",
+                  "Membership number",
+                  "Member name",
+                  "Contact information",
+                  "Email",
+                  // "下线",
+                  "Investment amount ($)",
+                  "Current balance ($)"
+                ]; //将对应的属性名转换成中文
+                // const tHeader = [];
+                const filterVal = [
+                  "create_time",
+                  "id",
+                  "username",
+                  "phone",
+                  "email",
+                  // "offline_price",
+                  "total_amount",
+                  "cash_amount"
+                ]; //table表格中对应的属性名
+                const list = res.data.list; //想要导出的数据
+                console.log(res.data.list+"ad")
+                const data = this.formatJson(filterVal, list);
+                export_json_to_excel(tHeader, data, "network excel");
+              });
+            }else{
+              require.ensure([], () => {
+                const { export_json_to_excel } = require("@/utils/Export2Excel.js"); //引入文件
+                const tHeader = [
+                  "日期",
+                  "会员编号",
+                  "会员名称",
+                  "联系方式",
+                  "邮箱",
+                  // "下线",
+                  "投资金额（$）",
+                  "当前余额（$）"
+                ]; //将对应的属性名转换成中文
+                // const tHeader = [];
+                const filterVal = [
+                  "create_time",
+                  "id",
+                  "username",
+                  "phone",
+                  "email",
+                  // "offline_price",
+                  "total_amount",
+                  "cash_amount"
+                ]; //table表格中对应的属性名
+                const list = res.data.list; //想要导出的数据
+                console.log(res.data.list+"ad")
+                const data = this.formatJson(filterVal, list);
+                export_json_to_excel(tHeader, data, "网络excel");
+              });
+            }
           }
       })
         // this.downloadLoading = true

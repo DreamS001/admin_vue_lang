@@ -1,5 +1,5 @@
 <template>
-  <div class=" clearfix">
+  <div class="item-box clearfix">
     <div style="" class="item-box-div" >
       <div class="item-lg">
         <div class="item">
@@ -112,7 +112,7 @@
               <div class="middle-left">
                 <!-- 我的团队 -->
                 {{$t('navbar.myteam')}}
-                </div>
+              </div>
               <div class="middle-m">
                 <div class="middle-m-d" :style="{ width: dataTable.teamNum + 'px' }" style="background:rgba(0, 170, 255, 1);"></div>
               </div>
@@ -148,7 +148,7 @@
         <h4>
           <!-- <span>详情</span>
           <img @click="contribute" src="../../assets/logo/cuo.png"/> -->
-          <div><span>公告详情</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div><span>{{$t('navbar.news_details')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
         <div class="info-box">
@@ -343,7 +343,6 @@ require("echarts/theme/macarons"); // echarts theme
 import { debounce } from "@/utils";
 import { getChartData } from "@/api/visits";
 import { notice, earn } from "@/api/map";
-import { fpthome } from '@/utils/i18n'
 
 export default {
   props: {
@@ -419,7 +418,6 @@ export default {
     });
   },
   methods: {
-    fpthome,
     deal() {
       this.$router.push({ path: "/deal/deallist" });
     },
@@ -490,8 +488,7 @@ export default {
     .item-box{
       display: flex;
       .item-box-div{
-          width:49%;
-          display: inline-block;
+          width:50%;
          .item-lg{
           width: 50%;
           float:left;

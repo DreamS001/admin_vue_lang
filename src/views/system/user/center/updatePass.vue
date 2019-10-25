@@ -57,6 +57,11 @@ export default {
       this.resetForm()
     },
     doSubmit() {
+      var reg=/^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{6,}$/
+      if(!reg.test(this.form.newPass)){
+        this.$message.error('密码至少6位，且需为字母数字混合')
+        return false
+      }
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.loading = true

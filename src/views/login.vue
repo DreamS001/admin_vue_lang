@@ -6,19 +6,35 @@
       <div class="logo">
       </div>
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-position="left" label-width="0px" class="login-form">
-        <div class="title">用户登录</div>
+        <div class="title">{{$t('login.title')}}</div>
+        <div class="lang-content">
+          <div class="select-lang">
+            <div @click="selectLang">
+              <img class="flag-img" :src="defaultImg" alt="" >
+              <span v-if="langPopup" class="xl-img"></span>
+              <span v-else class="xl2-img"></span>
+            </div>
+              <div class="lang-box" v-if="langPopup">
+                  <ul>
+                      <li v-for="(i,index) in langList" :key="index">
+                        <img class="flag-img" :src="i.src" alt="" @click="getLang(i)" />
+                      </li>
+                  </ul>
+              </div>
+          </div>
+        </div>
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+          <el-input v-model="loginForm.username" type="text" auto-complete="off" :placeholder="$t('login.placeholder_username')">
             <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon"/>
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleLogin">
+          <el-input v-model="loginForm.password" type="password" auto-complete="off" :placeholder="$t('login.placeholder_password')" @keyup.enter.native="handleLogin">
             <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon"/>
           </el-input>
         </el-form-item>
         <el-form-item prop="code">
-          <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin">
+          <el-input v-model="loginForm.code" auto-complete="off" :placeholder="$t('login.VerificationCode')" style="width: 63%" @keyup.enter.native="handleLogin">
             <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon"/>
           </el-input>
           <div class="login-code">
@@ -26,13 +42,13 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <el-checkbox v-model="loginForm.rememberMe" style="margin:0;">记住我</el-checkbox>
+          <el-checkbox v-model="loginForm.rememberMe" style="margin:0;">{{$t('login.jz')}}</el-checkbox>
           <!-- <div style="float:right;cursor: pointer;">忘记密码?</div> -->
         </el-form-item>
         <el-form-item style="width:100%;">
           <el-button :loading="loading" size="medium" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-            <span v-if="!loading">登 录</span>
-            <span v-else>登 录 中...</span>
+            <span v-if="!loading">{{$t('login.login')}}</span>
+            <span v-else>{{$t('login.loginz')}}</span>
           </el-button>
         </el-form-item>
         <el-form-item style="width:100%;">
@@ -54,11 +70,12 @@
 <script>
 import { encrypt } from '@/utils/rsaEncrypt'
 import Config from '@/config'
-import { getCodeImg } from '@/api/login'
+import { getCodeImg,switchLang } from '@/api/login'
 import Cookies from 'js-cookie'
 import {
   getEmailCode
 } from "@/api/finance";
+import { loginAdmin } from '@/utils/i18n'// 国际化主题名字
 export default {
   name: 'Login',
   data() {
@@ -96,7 +113,11 @@ export default {
       email:'',
       count: '获取验证码',
       timer: null,
-      disabled:true
+      disabled:true,
+      defaultImg:require('../assets/images/img_en.png'),
+      langList:[{id:1,src:require('../assets/images/img_en.png'),lang:'en'},{id:1,src:require('../assets/images/img_cn.png'),lang:'zh'}],
+      newLang:'en_US',
+      langPopup:false,
     }
   },
   watch: {
@@ -108,10 +129,56 @@ export default {
     }
   },
   created() {
+    if(Cookies.get('language')){
+      Cookies.remove('language')
+    }else{}
     this.getCode()
     this.getCookie()
   },
   methods: {
+    loginAdmin,
+    selectLang(){
+        this.langPopup=!this.langPopup;
+    },
+    getLang(e){
+      console.log(e)
+      this.$i18n.locale = e.lang
+      if(e.lang=='zh'){
+          this.newLang='zh_CN'
+          this.$message({
+              message: '语言切换成功',
+              type: 'success'
+          })
+      }else{
+          this.newLang='en_US'
+          this.$message({
+              message: 'switch language success',
+              type: 'success'
+          })
+      }
+      this.$store.dispatch('setLanguage', e.lang)
+      Cookies.set('language')
+      
+      // switchLang(this.newLang).then(res=>{
+      //     console.log(res)
+      //     if(res.code==200){
+      //         this.$store.dispatch('setLanguage', e.lang)
+      //         Cookies.set('language')
+      //         this.$message({
+      //             message: 'switch language success',
+      //             type: 'success'
+      //         })
+      //         // this.$router.go(0);
+      //     }else{
+      //         this.$message({
+      //             message: res.msg,
+      //             type: 'success'
+      //         })
+      //     }
+      // })
+      this.defaultImg=e.src;
+      this.langPopup=false;
+    },
     goRegister(){
       this.$router.push({ path: "/register" });
     },
@@ -168,6 +235,11 @@ export default {
       }
     },
     handleLogin() {
+      // var reg=/^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{6,}$/
+      // if(!reg.test(this.loginForm.password)){
+      //   this.$message.error('密码至少6位，且需为字母数字混合')
+      //   return false
+      // }
       this.$refs.loginForm.validate(valid => {
         const user = {
           username: this.loginForm.username,
@@ -284,6 +356,7 @@ export default {
     padding: 40px 60px;
     box-sizing: border-box;
     color: #fff !important;
+    position: relative;
 
   }
   .login-box{
@@ -320,6 +393,66 @@ export default {
         }
     }
   }
+
+  .lang-content{
+  position: absolute;
+  right: 64px;
+  top: 40px;
+}
+  .select-lang {
+        margin-left: 50px;
+        position: relative;
+    }
+    .select-lang>div {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .select-lang .flag-img{
+        width: 60px;
+        height: 40px;
+    }
+    .select-lang .xl-img{
+        display: block;
+        width: 22px;
+        height: 12px;
+        background: url('../assets/images/ic_home_top_xl.png') no-repeat;
+        background-size: 100% 100%;
+        margin-left: 20px;
+    }
+    .select-lang .xl2-img{
+      display: block;
+      width: 22px;
+      height: 12px;
+      background: url('../assets/images/ic_home_top_xl2.png') no-repeat;
+      background-size: 100% 100%;
+      margin-left: 20px;
+    }
+    .select-lang .lang-box{
+        position: absolute;
+        bottom: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width:160px;
+        height:80px;
+        background:rgba(14,30,75,0.4);
+        border:1px solid rgba(33,191,252,1);
+        box-shadow:0px 0px 25px 0px rgba(0,138,255,0.4);
+        z-index: 999;
+    }
+    .select-lang .lang-box ul{
+        height: 100%;
+        width:100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        padding-left: 0;
+    }
+    .select-lang .lang-box ul li{
+      list-style: none;
+    }
 </style>
 
 <style>
@@ -352,7 +485,7 @@ input{
 
   }
   .el-form-item:nth-of-type(4){
-    margin-bottom: 0 !important;
+    /* margin-bottom: 0 !important; */
   }
   .el-form-item:nth-of-type(5){
     margin-bottom: 10px !important;

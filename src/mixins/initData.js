@@ -26,9 +26,9 @@ export default {
         })
       })
     },
-    beforeInit() {
-      return true
-    },
+    // beforeInit() {
+    //   return true
+    // },
     pageChange(e) {
       console.log(e)
       this.page = e - 1

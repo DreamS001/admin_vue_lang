@@ -2,10 +2,19 @@
   <div class="wscn-http404-container">
     <div class="nav">
       <div class="block" style="min-width:600px;margin-left: 30px;">
-        <span class="demonstration">{{$t('financeCash.customQuery')}}：</span>
-        <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
-        <span class="time" style="margin-left:100px" @click="queryData">{{$t('financeCash.query')}}</span>
-        <span class="time"  @click="exportTable">{{$t('financeCash.export')}}</span>
+        <span class="demonstration">
+          <!-- 自定义查询： -->
+          {{$t('financeCash.custom_query')}}：
+        </span>
+        <el-date-picker v-model="value6" type="daterange" size="mini" :range-separator="$t('financeCash.to')" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
+        <span class="time" style="margin-left:100px" @click="queryData">
+          <!-- 查询 -->
+          {{$t('financeCash.query')}}
+        </span>
+        <span class="time"  @click="exportTable">
+          <!-- 导出 -->
+          {{$t('financeCash.export')}}
+        </span>
       </div>
     </div>
     <div style="width:100%!important;margin-top:20px;">
@@ -17,7 +26,10 @@
         <el-table-column :label="$t('financeCash.operation')" align="center" min-width="150">
           <template slot-scope="scope">
             <!-- <el-button type="expand" size="mini" @click="reveal(scope.$index, scope.row)">查看明细</el-button> -->
-            <div class="ck-btn" @click="reveal(scope.$index, scope.row)">{{$t('financeEarnings.detailed')}}</div>
+            <div class="ck-btn" @click="reveal(scope.$index, scope.row)">
+              <!-- 查看明细 -->
+              {{$t('financeCash.detailed')}}
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -29,7 +41,10 @@
     <div v-if="FC" class="fuCeng">
       <div>
         <h4>
-          <span>{{$t('financeEarnings.detailed')}}</span>
+          <span>
+            <!-- 详情 -->
+            {{$t('financeCash.details')}}
+            </span>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt/>
         </h4>
         <div>
@@ -50,6 +65,8 @@
   import moment from 'moment'
   import { formatDate } from "../../utils/date.js";
 
+  import Cookies from 'js-cookie'
+  var lang=Cookies.get('language') || 'en';
   export default {
     data() {
       return {
@@ -62,14 +79,15 @@
         endDatePlaceHolder: '',
         beginDate: '',
         endDate: '',
-        ttex: '查看详情',
         lielist: [],
         FC: false,
         allList: [],
         pageSize1: 2147483647,
         clickQueryDate: false,
         selectTime: false,
-        downloadLoading: false
+        downloadLoading: false,
+        eHeader:[],
+        eName:'',
       }
     },
     created() {
@@ -159,19 +177,29 @@
         return jsonData.map(v => filterVal.map(j => v[j]))
       },
       exportTable() {
+        let _this = this;
+        if(lang=='en'){
+          _this.eHeader=['Date', 'Static wallet revenue（$）','Robot purchase expense（$）', 'Cash withdrawals（$）']
+          _this.eName='Static income Excel'
+
+        }else{
+          _this.eHeader= ['日期', '静态钱包收益（$）', '购买机器人支出($)', '提现支出($)']
+          _this.eName='静态收益Excel'
+        }
         cashquery(this.pageNo, this.pageSize1, this.beginDate, this.endDate).then(res => {
           if(res.code==200){
-            this.allList = eval(res.list)
-            this.total = res.total
+            this.allList = eval(res.data.list)
+            this.total = res.data.total
             const date = JSON.parse(JSON.stringify(this.allList))
+            // console.log(date)
             require.ensure([], () => {
               const { export_json_to_excel } = require('@/utils/Export2Excel.js') //引入文件
-              const tHeader = ['日期', '静态钱包收益（$）', '购买机器人支出($)', '提现支出($)'] //将对应的属性名转换成中文
+              const tHeader = _this.eHeader//将对应的属性名转换成中文
               // const tHeader = [];
               const filterVal = ['date', 'sta_profit', 'device_expend', 'cash_withdraw'] //table表格中对应的属性名
               const list = date //想要导出的数据
               const data = this.formatJson(filterVal, list)
-              export_json_to_excel(tHeader, data, '静态收益excel')
+              export_json_to_excel(tHeader, data, _this.eName)
             })
           }
         })
@@ -383,15 +411,14 @@
   .ck-btn{
     width: 100px;
     height: 30px;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    font-size: 14px;
     background: url('../../assets/images/ic_home_Viewdetails.png') no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
     margin: 0 auto;
-    color: rgba(47, 228, 255, 1);
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
 </style>

@@ -19,6 +19,7 @@ module.exports = {
         }
       },
       '/auth': {
+        // target: 'http://pc.jie360.com.cn',      //目标服务器,注意要到端口号
         target: 'http://linf.jie360.com.cn',      //目标服务器,注意要到端口号
         changeOrigin: true,						//是否跨域
         pathRewrite: {

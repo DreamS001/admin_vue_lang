@@ -40,6 +40,10 @@ import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
 
+
+import Cookies from 'js-cookie'
+var lang=Cookies.get('language') || 'en';
+import { mapGetters } from 'vuex'
 export default {
   name: 'SidebarItem',
   components: { Item, AppLink },
@@ -64,14 +68,39 @@ export default {
       onlyOneChild: null
     }
   },
+  computed: {
+    ...mapGetters([
+        'user',
+    ]),
+    language() {
+        return this.$store.getters.language
+    }
+  },
   methods: {
     hasOneShowingChild(children, parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {
+          
+          // console.log(item.meta.title)
+          // console.log('1111')
           return false
         } else {
+          // console.log(item.meta.title)
           // Temp set(will be used if only has one showing child)
-          this.onlyOneChild = item
+          if(this.$store.getters.language=='en'){
+            if(item.meta.title=='首页'){
+              console.log(item.meta.title)
+              item.meta.title='Home'
+            }
+            this.onlyOneChild = item
+          }else{
+            if(item.meta.title=='首页'){
+              console.log(item.meta.title)
+              item.meta.title='首页'
+            }
+            this.onlyOneChild = item
+          }
+          // this.onlyOneChild = item
           return true
         }
       })

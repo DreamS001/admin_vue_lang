@@ -2,39 +2,63 @@
   <div class="wscn-http404-container">
     <div class="nav">
       <div class="block" style="width:100%!important">
-        <span class="demonstration" style="margin-left:30px;">自定义查询：</span>
-        <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
-        <span class="time" style="margin-left:4%" @click="queryData">查询</span>
-        <span class="time" @click="exportTable">导出</span>
+        <span class="demonstration" style="margin-left:30px;">
+          <!-- 自定义查询 -->
+          {{$t('products.custom_query')}}:
+          </span>
+        <el-date-picker v-model="value6" type="daterange" size="mini" :range-separator="$t('products.to')" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
+        <span class="time" style="margin-left:4%" @click="queryData">
+          <!-- 查询 -->
+          {{$t('products.query')}}
+        </span>
+        <span class="time" @click="exportTable">
+          <!-- 导出 -->
+          {{$t('products.export')}}
+        </span>
         <span
           class="time"
           style="float:right;margin-right:3%;width:88px!important"
           @click="appear"
-        >新增产品</span>
+        >
+        <!-- 新增产品 -->
+        {{$t('products.new_product')}}
+        </span>
       </div>
     </div>
     <div style="width:100%!important;margin-top:20px">
       <el-table :data="list" style="width: 100%!important"  :row-class-name="setClassName" :header-row-class-name="handlemyclass">
-        <el-table-column :cell-class-name="colorblueclass" prop="create_time" label="创建时间" align="center">
+        <el-table-column :cell-class-name="colorblueclass" prop="create_time" :label="$t('products.creationdate')" align="center">
           <template slot-scope="scope">{{scope.row.create_time|formatDate}}</template>
         </el-table-column>
-        <el-table-column prop="name" label="产品名称" align="center"></el-table-column>
-        <el-table-column prop="price" label="产品价格（$）" align="center"></el-table-column>
-        <el-table-column prop="period" label="周期（天）" align="center"></el-table-column>
-        <el-table-column prop="profit_rate" label="回报率(%)" align="center">
+        <el-table-column prop="name" :label="$t('products.productname')" align="center"></el-table-column>
+        <el-table-column prop="price" :label="$t('products.product_price')" align="center"></el-table-column>
+        <el-table-column prop="period" :label="$t('products.cycle_days')" align="center"></el-table-column>
+        <el-table-column prop="profit_rate" :label="$t('products.rate_of_returns')" align="center">
           <template slot-scope="scope">{{scope.row.profit_rate|formatrRate}}</template>
         </el-table-column>
-        <el-table-column prop="profit_distribute" label="收益分配" align="center"></el-table-column>
-        <el-table-column prop="is_delete" label="当前状态" align="center" width="120">
+        <el-table-column prop="profit_distribute" :label="$t('products.income_distribution')" align="center"></el-table-column>
+        <el-table-column prop="is_delete" :label="$t('products.current_state')" align="center" width="120">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.is_delete===0" type="success" style="border: 1px solid rgba(19, 206, 102, 1);">已启用</el-tag>
-            <el-tag type="danger" size="small" v-else style="border: 1px solid rgba(255, 73, 73, 1);">未启用</el-tag>
+            <el-tag v-if="scope.row.is_delete===0" type="success" style="border: 1px solid rgba(19, 206, 102, 1);">
+              <!-- 已启用 -->
+              {{$t('products.activated')}}
+              </el-tag>
+            <el-tag type="danger" size="small" v-else style="border: 1px solid rgba(255, 73, 73, 1);">
+              <!-- 未启用 -->
+              {{$t('products.not_activated')}}
+              </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="380" align="center">
+        <el-table-column :label="$t('products.operating')" width="380" align="center">
           <template slot-scope="scope">
-            <span class="s-btn" @click="handleEdit(scope.$index, scope.row)">编辑</span>
-            <span  class="s-btn" @click="handleDelete(scope.index, scope.row)">删除</span>
+            <span class="s-btn" @click="handleEdit(scope.$index, scope.row)">
+              <!-- 编辑 -->
+              {{$t('products.edit')}}
+            </span>
+            <span  class="s-btn" @click="handleDelete(scope.index, scope.row)">
+              <!-- 删除 -->
+              {{$t('products.delete')}}
+            </span>
           </template>
         </el-table-column>
         <!-- <template slot-scope="scope">
@@ -51,54 +75,81 @@
       <div v-if="FC" class="fuCeng productlist">
         <div>
           <h4>
-            <div><span>{{h1text}}产品</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+            <div><span>{{h1text}}
+              <!-- 产品 -->
+              {{$t('products.product')}}
+              </span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
             <img @click="increase" src="../../assets/logo/cuo.png" alt />
           </h4>
           <div>
             <p>
               <span class="xing" style="color:red">*</span>
-              <span class="title">产品名称：</span>
-              <el-input class="inputa" v-model="form.name" placeholder="请不要重复使用名称"></el-input>
+              <span class="title">
+                <!-- 产品名称 -->
+                {{$t('products.productname')}}
+                ：</span>
+              <el-input class="inputa" v-model="form.name" :placeholder="$t('products.duplicate_name')"></el-input>
             </p>
             <p>
               <span class="xing" style="color:red">*</span>
-              <span class="title">产品价格：</span>
+              <span class="title">
+                <!-- 产品价格 -->
+                {{$t('products.product_prices')}}
+                ：</span>
               <el-input
-                class="inputa" oninput="value=value.replace(/[^\d]/g,'')" @input="onInput1" v-model="form.price" placeholder="请输入数字"></el-input>
+                class="inputa" oninput="value=value.replace(/[^\d]/g,'')" @input="onInput1" v-model="form.price" :placeholder="$t('products.key_numbers')"></el-input>
               $
             </p>
             <p>
               <span class="xing" style="color:red">*</span>
-              <span class="title">产品周期：</span>
+              <span class="title">
+                <!-- 产品周期 -->
+                {{$t('products.product_life')}}
+                ：</span>
               <!-- value=value.replace(/[^\d]/g,'') -->
-              <el-input class="inputb" v-model="form.period" placeholder="请输入数字" @input="onInput2"  oninput="value=value.replace(/[^\d]/g,'')"></el-input>
-              天
+              <el-input class="inputb" v-model="form.period" :placeholder="$t('products.key_numbers')" @input="onInput2"  oninput="value=value.replace(/[^\d]/g,'')"></el-input>
+              {{$t('products.day')}}
             </p>
             <p>
               <span class="xing" style="color:red">*</span>
-              <span class="title">回报率：</span>
-              <el-input oninput="value=value.replace(/[^0\.][0-9]{3}$/g,'')" @input="onInput3" class="inputb" v-model="form.profitRate" placeholder="保留小数后三位"></el-input>
+              <span class="title">
+                <!-- 回报率 -->
+                {{$t('products.rate_of_return')}}
+                ：</span>
+              <el-input oninput="value=value.replace(/[^0\.][0-9]{3}$/g,'')" @input="onInput3" class="inputb" v-model="form.profitRate" :placeholder="$t('products.keep_three_decimal_places')"></el-input>
               (1=100%)
             </p>
             <p>
               <span class="xing" style="color:red">*</span>
-              <span class="title">设备数量：</span>
-              <el-input class="inputb" oninput="value=value.replace(/[^\d]/g,'')" @input="onInput4" v-model="form.num" placeholder="请输入数字"></el-input>
-              台
+              <span class="title">
+                <!-- 设备数量 -->
+                {{$t('products.equipment_quantity')}}
+                ：</span>
+              <el-input class="inputb" oninput="value=value.replace(/[^\d]/g,'')" @input="onInput4" v-model="form.num" :placeholder="$t('products.key_numbers')"></el-input>
+              {{$t('products.desk')}}
             </p>
             <p>
               <span class="xing" style="color:red">*</span>
-              <span class="title">收益分配：</span>
-              <el-input class="inputa" v-model="form.profitDistribute" placeholder="请输入收益分配"></el-input>
+              <span class="title">
+                <!-- 收益分配 -->
+                {{$t('products.income_distribution')}}
+                ：</span>
+              <el-input class="inputa" v-model="form.profitDistribute" :placeholder="$t('products.enter_the_income_distribution')"></el-input>
             </p>
             <p>
               <span class="xing" style="color:red">*</span>
-              <span class="title">次序:</span>
-              <el-input class="inputa" v-model="form.sort" placeholder="请输入次序" @input="onInput5" oninput="value=value.replace(/[^\d]/g,'')"></el-input>
+              <span class="title">
+                <!-- 次序 -->
+                {{$t('products.order')}}
+                ：</span>
+              <el-input class="inputa" v-model="form.sort" :placeholder="$t('products.enter_the_order')" @input="onInput5" oninput="value=value.replace(/[^\d]/g,'')"></el-input>
             </p>
             <p>
               <span class="xing" style="color:red;float: left">*</span>
-              <span class="title" style=" float: left">上传封面：</span>
+              <span class="title" style=" float: left">
+                <!-- 上传封面 -->
+                {{$t('products.upload_cover')}}
+                ：</span>
 
               <el-upload class="avatar-uploader" :action="imagesUploadApiNew" :show-file-list="false" :headers="headers" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
                 <img v-if="imageUrl" :src="imageUrl" class="avatar"/>
@@ -106,8 +157,14 @@
               </el-upload>
             </p>
             <p class="status">
-              <span class="time" @click="confirm" style="cursor: pointer">确定</span>
-              <span class="time" @click="increase" style="cursor: pointer">取消</span>
+              <span class="time" @click="confirm" style="cursor: pointer">
+                <!-- 确定 -->
+                {{$t('products.determine')}}
+              </span>
+              <span class="time" @click="increase" style="cursor: pointer">
+                <!-- 取消 -->
+                {{$t('products.cancel')}}
+              </span>
             </p>
           </div>
         </div>
@@ -123,6 +180,8 @@
   import { getToken } from '@/utils/auth.js'
   import { signFigures } from '../../utils/floatToInt.js'
   import { mapGetters } from 'vuex'
+  import Cookies from 'js-cookie'
+  var lang=Cookies.get('language') || 'en';
 
   export default {
     data() {
@@ -297,7 +356,11 @@
       },
       // 编辑
       handleEdit($index, row) {
-        this.h1text = '编辑'
+        if (lang=="en") {
+          this.h1text = 'Edit'
+        }else{
+          this.h1text = '编辑'
+        }
         this.popup = 1
         this.FC = true
         console.log($index)
@@ -318,7 +381,11 @@
       },
       appear() {
         this.popup = 2
-        this.h1text = '新增'
+        if (lang=="en") {
+          this.h1text = 'New'
+        }else{
+          this.h1text = '新增'
+        }
         this.FC = true
         this.form.name = ''
         this.form.price = ''
@@ -499,22 +566,23 @@
         //   return this.$message.error(res.data.msg)
         // } else if (res.msg == '上传成功') {
 
-          
+
         //   console.log(res.data.url)
         // } else {
         //   return this.$message.error('图片上传失败')
         // }
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg'
+        const isJPG = file.type === 'image/PNG'
         const isLt2M = file.size / 1024 / 1024 < 2
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!')
-        }
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 PNG 格式!')
+        // }
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!')
         }
-        return isJPG && isLt2M
+        // return isJPG && isLt2M
+        return  isLt2M
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => v[j]))
@@ -568,7 +636,7 @@
     height: 30px;
     line-height: 30px;
     font-size: 12px;
-    color: #fff !important;
+    // color: #fff !important;
     border-radius: 0;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -681,7 +749,7 @@
             // }
 
             .title {
-              width: 100px !important;
+              width: 138px !important;
               display: inline-block;
               margin: 0px auto 0 auto !important;
               // font-size: 16px !important;
@@ -721,7 +789,7 @@
 
   .inputb {
     display: inline-block;
-    width: 150px;
+    width: 220px;
     margin-right: 10px;
 
     > input {

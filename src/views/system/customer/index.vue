@@ -4,24 +4,24 @@
 			<!-- 搜索 -->
 			<!-- <el-input v-model="query.value" clearable placeholder="输入名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery"/> -->
 			<el-form :inline="true" :model="formInline" class="demo-form-inline">
-			<el-form-item :label="$t('systemes.merchantname')">
-				<el-input v-model="formInline.user" :placeholder="$t('systemes.merchantname')" style="width: 18.75rem;"></el-input>
+			<el-form-item label="商户名称">
+				<el-input v-model="formInline.user" placeholder="商户名称" style="width: 18.75rem;"></el-input>
 			</el-form-item>
-			<el-form-item :label="$t('systemes.date')">
+			<el-form-item label="日期">
 				<el-date-picker
 				size="small"
 				  v-model="value2"
 				  type="daterange"
 				  align="right"
 				  unlink-panels
-				  :range-separator="$t('systemes.to')"
-				  :start-placeholder="$t('systemes.startdate')"
-				  :end-placeholder="$t('systemes.dateclosed')"
+				  range-separator="至"
+				  start-placeholder="开始日期"
+				  end-placeholder="结束日期"
 				  :picker-options="pickerOptions">
 				</el-date-picker>
 			</el-form-item>
 			<el-form-item>
-			<el-button size="mini" type="primary" icon="el-icon-search" @click="toQuery">{{$t('systemes.search')}}</el-button>
+			<el-button size="mini" type="primary" icon="el-icon-search" @click="toQuery">搜索</el-button>
 			</el-form-item>
 			<el-form-item>
 			  <el-button
@@ -30,7 +30,7 @@
 			    size="mini"
 			    type="warning"
 			    icon="el-icon-download"
-			    @click="download">{{$t('systemes.export')}}</el-button>
+			    @click="download">导出</el-button>
 			</el-form-item>
 			</el-form>
 			<!-- 新增 -->
@@ -45,28 +45,28 @@
 			<!-- 导出 -->
 		</div>
 	<el-table :data="tableData" style="width: 100%" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-      <el-table-column prop="create_time" :label="$t('systemes.date')" width="180" align="center" header-align="center">
+      <el-table-column prop="create_time" label="日期" width="180" align="center" header-align="center">
       </el-table-column>
-      <el-table-column prop="apdid_token" :label="$t('systemes.devicenumber')" width="180" align="center" header-align="center">
+      <el-table-column prop="apdid_token" label="设备号" width="180" align="center" header-align="center">
       </el-table-column>
-      <el-table-column prop="app_name" :label="$t('systemes.merchantname')" align="center" header-align="center">
+      <el-table-column prop="app_name" label="商户名称" align="center" header-align="center">
       </el-table-column>
-			<el-table-column prop="app_version" :label="$t('systemes.merchantrate')" align="center" header-align="center">
+			<el-table-column prop="app_version" label="商户费率" align="center" header-align="center">
 			</el-table-column>
-			<el-table-column prop="bio_metainfo" :label="$t('systemes.contractrate')" align="center" header-align="center">
+			<el-table-column prop="bio_metainfo" label="签约费率" align="center" header-align="center">
 			</el-table-column>
-			<el-table-column prop="os_version" :label="$t('systemes.superioragent')" align="center" header-align="center">
+			<el-table-column prop="os_version" label="上级代理" align="center" header-align="center">
 			</el-table-column>
-			<el-table-column prop="machine_info" :label="$t('systemes.commission')" align="center" header-align="center">
+			<el-table-column prop="machine_info" label="佣金(元)" align="center" header-align="center">
 			</el-table-column>
-			<el-table-column prop="merchant_info" :label="$t('systemes.numberofpayments')" align="center" header-align="center">
+			<el-table-column prop="merchant_info" label="支付笔数" align="center" header-align="center">
 			</el-table-column>
-			<el-table-column prop="merchant_info" :label="$t('systemes.numberofpayers')" align="center" header-align="center">
+			<el-table-column prop="merchant_info" label="支付人数" align="center" header-align="center">
 			</el-table-column>
-			<el-table-column prop="merchant_info" :label="$t('systemes.paymentamount')" align="center" header-align="center">
+			<el-table-column prop="merchant_info" label="支付金额(元)" align="center" header-align="center">
 			</el-table-column>
     </el-table>
-
+	
 	<!-- 新增窗口 -->
 	<!-- <el-dialog title="新增设备" :visible.sync="dialogFormVisible" append-to-body>
   <el-form :model="form" size="small">
@@ -104,12 +104,11 @@
   </div>
 </el-dialog> -->
 	</div>
-
+	
 </template>
 
 <script>
-  import checkPermission from '@/utils/permission' // 权限判断函数
-  import { systemes } from '@/utils/i18n'
+	import checkPermission from '@/utils/permission' // 权限判断函数
 	export default {
       data() {
         return {
@@ -185,39 +184,38 @@
         }
       },
 	  methods:{
-      systemes,
-      checkPermission,
-      add() {
-        this.dialogFormVisible = true
-      },
-      // 导出
-      download() {
-        this.downloadLoading = true
-        import('@/utils/Export2Excel').then(excel => {
-          const tHeader = ['ID', '设备指纹', '应用名称', '应用版本', '生物信息', '系统版本', '设备硬件相关信息','商户相关信息','刷脸调用的事务ID','添加时间','修改时间']
-          const filterVal = ['id', 'apdid_token', 'app_name', 'app_version', 'bio_metainfo', 'os_version', 'machine_info','merchant_info','remote_logo_id','create_time','modify_time']
-          const data = this.formatJson(filterVal, this.tableData)
-          excel.export_json_to_excel({
-            header: tHeader,
-            data,
-            filename: 'table-list'
-          })
-          this.downloadLoading = false
-        })
-      },
-      // 数据转换
-      formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
-          if (j === 'createTime' || j === 'lastPasswordResetTime') {
-            return parseTime(v[j])
-          } else if (j === 'enabled') {
-            return parseTime(v[j]) ? '启用' : '禁用'
-          } else {
-            return v[j]
-          }
-        }))
-      },
-      }
+		checkPermission,
+		add() {
+			this.dialogFormVisible = true
+		},
+		// 导出
+		download() {
+		  this.downloadLoading = true
+		  import('@/utils/Export2Excel').then(excel => {
+		    const tHeader = ['ID', '设备指纹', '应用名称', '应用版本', '生物信息', '系统版本', '设备硬件相关信息','商户相关信息','刷脸调用的事务ID','添加时间','修改时间']
+		    const filterVal = ['id', 'apdid_token', 'app_name', 'app_version', 'bio_metainfo', 'os_version', 'machine_info','merchant_info','remote_logo_id','create_time','modify_time']
+		    const data = this.formatJson(filterVal, this.tableData)
+		    excel.export_json_to_excel({
+		      header: tHeader,
+		      data,
+		      filename: 'table-list'
+		    })
+		    this.downloadLoading = false
+		  })
+		},
+		// 数据转换
+		formatJson(filterVal, jsonData) {
+		  return jsonData.map(v => filterVal.map(j => {
+		    if (j === 'createTime' || j === 'lastPasswordResetTime') {
+		      return parseTime(v[j])
+		    } else if (j === 'enabled') {
+		      return parseTime(v[j]) ? '启用' : '禁用'
+		    } else {
+		      return v[j]
+		    }
+		  }))
+		},
+	  }
     }
 </script>
 

@@ -4,7 +4,7 @@
         <!-- <div>{{textt}}</div> -->
         <div class="top-show">
           <div class="show-title">
-            <span>人员结构图</span>
+            <span>{{$t('financeCash.team_jg')}}</span>
             <img src="../../assets/images/img_jianbian.png" alt="">
           </div>
           <div class="show-content">
@@ -16,7 +16,7 @@
                 <div class="left-btn" @click="prevBtn"></div>
               <div class="list-top">
                 <img style="width:70px;height:70px" src="https://i.loli.net/2019/04/04/5ca5b971e1548.jpeg" alt="">
-                <!-- <div>弈霖科技</div>
+                <!-- <div>XX科技</div>
                 <div>投资金额：$12000.00</div>
                 <div>团队人数：6人</div> -->
                 <div>{{datass.name}}</div>
@@ -130,6 +130,9 @@ import { persAll } from "@/api/team";
 //   console.log(res)
 // });
 
+import { financeCash } from '@/utils/i18n'// 国际化主题名字
+import Cookies from 'js-cookie'
+var lang=Cookies.get('language') || 'en';
 export default {
   data() {
     return {
@@ -166,7 +169,7 @@ export default {
   // },
 
   methods: {
-
+    financeCash,
     getValue(data) {
       this.$refs.carouser.style.left = 0
       console.log(data)
@@ -206,6 +209,11 @@ export default {
       // this.request()
     },
     prevBtn(){
+      if(lang=='en'){
+        var msg='No More'
+      }else{
+        var msg='没有更多了'
+      }
         console.log(this.offsetCount)
         if(this.datass.children.length>1){
           if (this.offsetCount > 0) {
@@ -214,14 +222,14 @@ export default {
           } else {
             this.$message({
                 type: 'none',
-                message: '没有更多了'
+                message: msg
             })
             return false
           }
         }else{
           this.$message({
                 type: 'none',
-                message: '没有更多了'
+                message: msg
             })
           return false
         }
@@ -236,7 +244,7 @@ export default {
           } else {
             this.$message({
                 type: 'none',
-                message: '没有更多了'
+                message: msg
             })
             return false
 
@@ -244,7 +252,7 @@ export default {
         }else{
           this.$message({
                 type: 'none',
-                message: '没有更多了'
+                message: msg
             })
           return false
         }

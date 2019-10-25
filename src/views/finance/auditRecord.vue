@@ -1,53 +1,52 @@
 <template>
   <div class="wscn-http404-container">
-    <div class="nav">
-      <div class="block" style="min-width:600px;margin-left: 30px;">
-        <span class="demonstration">
-          <!-- 自定义查询： -->
-          {{$t('financeCash.custom_query')}}：
-        </span>
-        <el-date-picker v-model="value6" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" :range-separator="$t('financeCash.to')" @change="timeChange"/>
+    <div class="nav nav2" style="min-height:130px;min-width:970px;">
+      <div class="block" style="width:100% ;margin-left: 30px;">
+        <span class="demonstration">自定义查询：</span>
+        <el-date-picker v-model="value6" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" range-separator="至" @change="timeChange"/>
+        <span class="demonstration" style="margin-left:25px;margin-right:17px;">交易状态：</span>
+        <el-select  clearable placeholder="全部" class="filter-item" style="width: 200px；" v-model="name4" @change="selectGet">
+          <el-option v-for="item in enabledTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+        </el-select>
+        <span class="demonstration" style="margin-left:25px;margin-right:17px;">联系方式：</span>
+        <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1);background: #1888cb ;" v-model="name"/>
         <div style="height:15px"></div>
-        <span class="demonstration" >
-          <!-- 流水号： -->
-          {{$t('financeCash.serial_number')}}：
-          </span>
-        <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1);background: #1888cb ;" v-model="input1"/>
+        <span class="demonstration" style="margin-right:27px;">流水号：</span>
+        <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1);background: #1888cb;margin-bottom:5px;" v-model="name1"/>
+        <span class="demonstration" style="margin-left:25px;margin-right:17px;">会员名称：</span>
+        <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1);background: #1888cb ;" v-model="name2"/>
+        <span class="demonstration" style="margin-left:25px;margin-right:17px;">交易金额：</span>
+        <div  style="display:inline-block;">
+          <div class="transaction_amount">
+            <input type="text" style="display:inline-block;width:70px" placeholder="$1000" v-model="name3start">
+            <span style="display:inline-block">至</span>
+            <input type="text" style="display:inline-block;width:70px" placeholder="$5000" v-model="name3end">
+          </div>
+        </div>
+        <div style="margin-left:6%; display:inline-block; ">
+          <span class="time" style="" @click="queryData">查询</span>
+          <span class="time" style="" @click="exportTable">导出</span>
+        </div>
 
-        <span class="time" style="margin-left:100px" @click="queryData">
-          <!-- 查询 -->
-          {{$t('financeCash.query')}}
-        </span>
-        <span class="time" @click="exportTable">
-          <!-- 导出 -->
-          {{$t('financeCash.export')}}
-        </span>
       </div>
     </div>
     <div style="width:100%!important;margin-top:20px">
       <el-table :data="list" style="width: 100%!important" :row-class-name="setClassName" :header-row-class-name="handlemyclass">
-        <el-table-column prop="create_time" :label="$t('financeCash.date')" align="center"></el-table-column>
-        <el-table-column prop="merchant_order_id" :label="$t('financeCash.serial_number')" align="center"></el-table-column>
-        <el-table-column prop="third_trade_id" :label="$t('financeCash.wallet_adress')" align="center"></el-table-column>
-        <el-table-column prop="charge_amount" :label="$t('financeCash.recharge_amount')" align="center"></el-table-column>
-        <el-table-column prop="charge_token_id" :label="$t('financeCash.transaction_id')" align="center"></el-table-column>
-        <el-table-column prop="order_status" :label="$t('financeCash.approval_status')" align="center">
+        <el-table-column prop="create_time" label="充值时间" align="center"></el-table-column>
+        <el-table-column prop="merchant_order_id" label="流水号" align="center"></el-table-column>
+        <el-table-column prop="username" label="会员名称" align="center"></el-table-column>
+        <el-table-column prop="phone" label="联系方式" align="center"></el-table-column>
+        <el-table-column prop="charge_amount" label="充值金额（$）" align="center"></el-table-column>
+        <el-table-column prop="charge_token_id" label="地址" align="center"></el-table-column>
+        <el-table-column prop="order_status" label="交易状态" align="center">
           <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.order_status==300">
-              <!-- 审核成功 -->
-              {{$t('financeCash.sh_success')}}
-            </el-tag>
-            <el-tag type="danger" v-if="scope.row.order_status==200">
-              <!-- 审核失败 -->
-              {{$t('financeCash.sh_fail')}}
-            </el-tag>
-            <el-tag type v-if="scope.row.order_status==100">
-              <!-- 审核中 -->
-              {{$t('financeCash.in_audit')}}
-            </el-tag>
+            <el-tag type="success" v-if="scope.row.order_status==300">审核成功</el-tag>
+            <el-tag type="danger" v-if="scope.row.order_status==200">审核失败</el-tag>
+            <el-tag type v-if="scope.row.order_status==100">审核中</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" :label="$t('financeCash.remark')" min-width="50"></el-table-column>
+        <el-table-column prop="remark" label="备注" min-width="50"></el-table-column>
+        <el-table-column prop="modify_time" label="审核时间" align="center"></el-table-column>
       </el-table>
     </div>
     <div class="block" style="margin-bottom:50px;padding-bottom:20px">
@@ -57,18 +56,21 @@
 </template>
 
 <script>
-  import { topupList, topupQueryList } from '@/api/finance'
+  import { rechargelog } from '@/api/finance'
   import moment from 'moment'
   import { formatDate } from '../../utils/date.js'
-
-  import Cookies from 'js-cookie'
-  var lang=Cookies.get('language') || 'en';
 
   export default {
     data() {
       return {
         value6: [],
-        input1: '',
+        name: '',
+        name1:'',
+        name2:'',
+        name3start:'',
+        name3end:'',
+        name3:'',
+        name4:'',
         pageNo: 1,
         pageSize: 10,
         total: 1,
@@ -77,16 +79,18 @@
         endDatePlaceHolder: '',
         beginDate: '',
         endDate: '',
+        ttex: '查看详情',
         lielist: [],
         FC: false,
         allList: [],
         pageSize1: 2147483647,
         downloadLoading: false,
-        eHeader:[],
-        eName:'',
-        success:'',
-        fail:'',
-        middle:'',
+        enabledTypeOptions: [
+          { key: 100, display_name: '审核中' },
+          { key: 200, display_name: '驳回' },
+          { key: 300, display_name: '审核完成' }
+        ],
+        maxPageSize: 2147483647,
       }
     },
     created() {
@@ -95,9 +99,19 @@
       this.endDatePlaceHolder = formatDate(date, 'yyyy-MM-dd')
       this.beginDate = ''
       this.endDate = ''
+      // this.name3=this.name3start+','+this.name3end
       this.request()
     },
     methods: {
+       selectGet(vId){
+      let obj = {};
+      obj = this.enabledTypeOptions.find((item)=>{//这里的selectList就是上面遍历的数据源
+          return item.key === vId;//筛选出匹配数据
+      });
+      // console.log(obj.display_name);//我这边的name就是对应label的
+      this.name4=obj.key
+      // console.log(obj.id);
+      },
       // setClassName({ row, index }) {
       //   return row.expand ? 'expand' : ''
       // },
@@ -169,14 +183,27 @@
         }
       },
       request: function() {
-        topupQueryList(this.pageNo, this.pageSize, this.beginDate, this.endDate, this.input1).then(
+        if (this.name3start=='' || this.name3end=='') {
+          this.name3=''
+        }else{
+          this.name3=this.name3start+','+this.name3end
+        }
+        rechargelog(this.pageNo, this.pageSize, this.beginDate, this.endDate, this.name,this.name1,this.name2,this.name3,this.name4).then(
           res => {
             if(res.code==200){
-            res.data.list.forEach((v,i)=>{
-                res.data.list[i].create_time = moment(res.data.list[i].create_time).format("YYYY-MM-DD hh:mm:ss");
-              })
-            this.list = eval(res.data.list)
-            this.total = res.data.total
+              this.allList = eval(res.data.list);
+              console.log(res.data.list)
+              let date = JSON.parse(JSON.stringify(this.allList));
+              date.forEach((v, i) => {
+                date[i].create_time = moment(date[i].create_time).format("YYYY-MM-DD hh:mm:ss");
+                if(date[i].modify_time==null){
+
+                }else{
+                  date[i].modify_time = moment(date[i].modify_time).format("YYYY-MM-DD hh:mm:ss");
+                }
+              });
+              this.list =date
+              this.total = res.data.total
 
             }
           }
@@ -184,43 +211,35 @@
       },
       queryData: function() {
         this.pageNo = 1
+
         this.request()
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => v[j]))
       },
       exportTable() {
-        let _this = this;
-        if(lang=='en'){
-          _this.eHeader=['Date', 'Serial number','Wallet address','Recharge amount（$）','Transaction ID', 'Approval status','Remarks']
-          _this.eName='Recharge details Excel'
-          _this.success='Audit success'
-          _this.fail='Audit failure'
-          _this.middle='In Audit'
-        }else{
-          _this.eHeader= ['日期','流水号',  '钱包地址', '充值金额($)', '交易ID','审核状态',"备注"]
-          _this.eName='充值明细Excel'
-          _this.success='审核成功'
-          _this.fail='审核失败'
-          _this.middle='审核中'
-        }
-        topupQueryList(this.pageNo, this.pageSize1, this.beginDate, this.endDate, this.input1).then(res => {
+        rechargelog(this.pageNo, this.maxPageSize, this.beginDate, this.endDate, this.name,this.name1,this.name2,this.name3,this.name4).then(res => {
           if(res.code==200){
             this.allList = eval(res.data.list)
             this.total = res.data.total
             const date = JSON.parse(JSON.stringify(this.allList))
             date.forEach((v,i) => {
-              date[i].order_status= date[i].order_status==300? _this.success : date[i].order_status==200? _this.fail : _this.middle
-               date[i].create_time = moment(date[i].create_time).format("YYYY-MM-DD hh:mm:ss");
+              date[i].order_status= date[i].order_status==300?'审核成功': date[i].order_status==200?'审核失败':'审核中'
+              date[i].create_time = moment(date[i].create_time).format("YYYY-MM-DD hh:mm:ss");
+              if(date[i].modify_time==null){
+                date[i].modify_time = '';
+              }else{
+                date[i].modify_time = moment(date[i].modify_time).format("YYYY-MM-DD hh:mm:ss");
+              }
             });
             require.ensure([], () => {
               const { export_json_to_excel } = require('@/utils/Export2Excel.js') //引入文件
-              const tHeader = _this.eHeader//将对应的属性名转换成中文
+              const tHeader = ['充值时间','流水号',  '会员名称','联系方式', '充值金额($)', '地址','交易状态',"备注",'审核时间'] //将对应的属性名转换成中文
               // const tHeader = [];
-              const filterVal = ['create_time','merchant_order_id', 'third_trade_id', 'charge_amount', 'charge_token_id', 'order_status', 'remark'] //table表格中对应的属性名
+              const filterVal = ['create_time','merchant_order_id','username', 'phone', 'charge_amount', 'charge_token_id', 'order_status', 'remark','modify_time'] //table表格中对应的属性名
               const list = date //想要导出的数据
               const data = this.formatJson(filterVal, list)
-              export_json_to_excel(tHeader, data, _this.eName)
+              export_json_to_excel(tHeader, data, '充值记录列表excel')
             })
           }
         })
@@ -256,9 +275,21 @@
   }
 </style>
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .demonstration{
-    display: inline-block;
-    width:100px;
+  .transaction_amount{
+    margin:0;
+    width:200px;
+    height:28px;
+    border:1px solid rgba(47, 228, 255, 1);
+    background: #1888cb ;
+    display:inline-block;
+    box-sizing:border-box;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .transaction_amount input{
+    border:none;
+    outline: none;
   }
   .wscn-http404-container {
     background: transparent;
@@ -415,4 +446,12 @@
   .el-pager li.active{
     color: rgba(47, 228, 255, 1) !important;
   }
+   .nav2 .el-select,.nav2 .el-select .el-input__inner{
+    height:28px !important;
+    background: rgb(24, 136, 203);
+  }
+  .nav2 .el-select .el-input__icon{
+    line-height: 28px;
+  }
+
 </style>

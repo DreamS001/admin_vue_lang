@@ -2,14 +2,26 @@
   <div class="wscn-http404-container">
     <div class="nav">
       <div class="block" style="min-width:600px;margin-left: 30px;">
-        <span class="demonstration">{{$t('financeCash.customQuery')}}：</span>
-        <el-date-picker v-model="value6" type="daterange" size="mini" range-separator="至" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
+        <span class="demonstration" style="">
+          <!-- 自定义查询： -->
+          {{$t('financeCash.custom_query')}}：
+        </span>
+        <el-date-picker v-model="value6" type="daterange" size="mini" :range-separator="$t('financeCash.to')" :start-placeholder="beginDatePlaceHolder" :end-placeholder="endDatePlaceHolder" @change="timeChange"></el-date-picker>
         <div style="height:15px"></div>
-        <span class="demonstration" style="margin-right:13px;">{{$t('financeCash.points_source')}}：</span>
+        <span class="demonstration" style="">
+          <!-- 积分来源： -->
+          {{$t('financeCash.points_source')}}：
+          </span>
         <input style="width:200px;height:28px;border:1px solid rgba(47, 228, 255, 1);background: #1888cb ;" v-model="name"/>
         <div style="display:inline-block">
-          <span class="time" style="margin-left:100px" @click="queryData">{{$t('financeCash.query')}}</span>
-          <span class="time"  @click="exportTable">{{$t('financeCash.export')}}</span>
+          <span class="time" style="margin-left:100px" @click="queryData">
+          <!-- 查询 -->
+          {{$t('financeCash.query')}}
+          </span>
+          <span class="time"  @click="exportTable">
+          <!-- 导出 -->
+          {{$t('financeCash.export')}}
+          </span>
         </div>
 
       </div>
@@ -65,6 +77,9 @@
   import moment from 'moment'
   import { formatDate } from "../../utils/date.js";
 
+  import Cookies from 'js-cookie'
+  var lang=Cookies.get('language') || 'en';
+
   export default {
     data() {
       return {
@@ -77,7 +92,6 @@
         endDatePlaceHolder: '',
         beginDate: '',
         endDate: '',
-        ttex: '查看详情',
         lielist: [],
         FC: false,
         allList: [],
@@ -85,7 +99,9 @@
         clickQueryDate: false,
         selectTime: false,
         downloadLoading: false,
-        name:''
+        name:'',
+        eHeader:[],
+        eName:'',
       }
     },
     created() {
@@ -177,30 +193,48 @@
 
 
       getData(){
+        let _this = this;
+        if(lang=='en'){
+          _this.eHeader=['Points source', 'Vendor identification','Original integral','Existing integral','Integral growth', 'Date']
+          _this.eName='Integral benefits Excel'
+
+        }else{
+          _this.eHeader= ['积分来源', '资方标识', '原有积分', '现有积分','积分增长','日期']
+          _this.eName='积分收益Excel'
+        }
         integral(this.pageNo, this.pageSize1, this.beginDate, this.endDate,this.name).then(res => {
           if(res.code==200){
             console.log(res)
             this.allList = eval(res.data.list);
             console.log(res.data.list)
-              let date = JSON.parse(JSON.stringify(this.allList));
+            let date = JSON.parse(JSON.stringify(this.allList));
           // 转换时间戳
             date.forEach((v, i) => {
               date[i].create_time = moment(date[i].create_time).format("YYYY-MM-DD hh:mm:ss");
             });
             require.ensure([], () => {
               const { export_json_to_excel } = require("@/utils/Export2Excel.js"); //引入文件
-              const tHeader = ['积分来源', '资方标识', '原有积分', '现有积分','积分增长','日期']; //将对应的属性名转换成中文
+              const tHeader = _this.eHeader; //将对应的属性名转换成中文
               const filterVal = ['credit_dest_id', 'investor_id', 'old_credit', 'new_credit','credit_increase','create_time'];; //table表格中对应的属性名
               const list = date; //想要导出的数据
               console.log(date+"abcd")
               const data = this.formatJson(filterVal, list);
-              export_json_to_excel(tHeader, data, "积分收益excel");
+              export_json_to_excel(tHeader, data, _this.eName);
             });
           }
         });
 
      },
     getAllData(){
+        let _this = this;
+        if(lang=='en'){
+          _this.eHeader=['Points source', 'Vendor identification','Original integral','Existing integral','Integral growth', 'Date']
+          _this.eName='Integral benefits Excel'
+
+        }else{
+          _this.eHeader= ['积分来源', '资方标识', '原有积分', '现有积分','积分增长','日期']
+          _this.eName='积分收益Excel'
+        }
       integral(this.pageNo, this.pageSize1, this.beginDate,  this.endDate,this.name).then(res => {
         if(res.code==200){
           this.allList = eval(res.data.list);
@@ -211,12 +245,12 @@
           });
           require.ensure([], () => {
             const { export_json_to_excel } = require("@/utils/Export2Excel.js"); //引入文件
-            const tHeader = ['积分来源', '资方标识', '原有积分', '现有积分','积分增长','日期']; //将对应的属性名转换成中文
+            const tHeader = _this.eHeader; //将对应的属性名转换成中文
             const filterVal = ['credit_dest_id', 'investor_id', 'old_credit', 'new_credit','credit_increase','create_time']; //table表格中对应的属性名
             const list = date; //想要导出的数据
             console.log(list)
             const data = this.formatJson(filterVal, list);
-            export_json_to_excel(tHeader, data, "积分收益excel");
+            export_json_to_excel(tHeader, data, _this.eName);
           });
         }
       });
@@ -363,6 +397,10 @@
   }
 </style>
 <style rel="stylesheet/scss" lang="scss" scoped>
+  .demonstration{
+    display: inline-block;
+    width:100px;
+  }
   .wscn-http404-container {
     background: transparent;
     min-height: calc(100vh - 84px);
@@ -374,7 +412,6 @@
   .nav {
     width: 100%;
     height: 120px;
-    // background: #fff;
     background: url('../../assets/images/bg_caozuo.png') no-repeat;
     background-size: 100% 100%;
     display: flex;
@@ -388,18 +425,15 @@
 
   .block {
     font-size: 13px;
-    // margin-left: 30px;
   }
 
   .time {
     display: inline-block;
     width: 110px;
     height: 30px;
-    // background: #4986ff;
     background: url('../../assets/images/ic_home_Viewdetails.png') no-repeat;
     background-size: 100% 100%;
     font-size: 12px;
-    // padding: 8px 20px;
     line-height: 30px;
     text-align: center;
     color: rgba(43, 250, 255, 1) !important;
@@ -413,7 +447,6 @@
     font-weight: 100;
     width: 100% !important;
   }
-
   .blue {
     color: #2cc23c !important;
   }
@@ -424,8 +457,6 @@
     right: 0;
     bottom: 0;
     top: 0;
-    // width: 100%;
-    // height: 100vh;
     background: rgba(13, 29, 76, 0.8);
     display: flex;
     justify-content: center;
@@ -433,11 +464,8 @@
     > div {
       width: 70%;
       height: 506px;
-      // background: white;
       background: url('../../assets/images/bg_qb_ckmx.png') no-repeat;
       background-size:100% 100%;
-      // overflow-x: hidden;
-      // overflow-y: scroll;
       padding: 22px;
       box-sizing: border-box;
       h4 {
@@ -445,10 +473,8 @@
         justify-content: space-between;
         padding: 20px;
         margin: 0;
-        // background: #4986ff;
         color: white;
         font-weight: 100;
-
         >div{
           >img{
             width: 42px;
@@ -461,10 +487,7 @@
           height: 30px;
         }
       }
-
       div {
-        // margin-top: 10px;
-
         p {
           font-size: 15px;
           text-align: center;
@@ -476,21 +499,7 @@
             border: 1px solid gainsboro;
             margin: 0 40px;
           }
-
-          // span:nth-of-type(1) {
-          //   background: #4986ff;
-          //   color: white;
-          // }
-
-          // span:nth-of-type(2) {
-          //   background: #fff;
-          //   color: #c2c2c2;
-          // }
         }
-
-        // p:nth-of-type(3) {
-        //   margin-top: 60px;
-        // }
       }
     }
   }

@@ -1,9 +1,8 @@
 import Cookies from 'js-cookie'
 
 const app = {
-  state: {
-    // 中英文
-    language: Cookies.get('language') || 'zh',
+  state: {// 中英文
+    language: Cookies.get('language') || 'en',
     sidebar: {
       opened: !+Cookies.get('sidebarStatus'),
       withoutAnimation: false
@@ -19,8 +18,7 @@ const app = {
       }
       state.sidebar.opened = !state.sidebar.opened
       state.sidebar.withoutAnimation = false
-    },
-    // 中英文
+    },// 中英文
     SET_LANGUAGE: (state, language) => {
       state.language = language
       Cookies.set('language', language)

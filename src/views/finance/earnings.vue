@@ -9,14 +9,23 @@
       <li class="item">
         <div>
           <div class="item-top">
-            <span>{{$t('financeEarnings.title_1')}}</span>
+            <span>
+              <!-- 现金钱包 -->
+              {{$t('financeEarnings.title_1')}}
+            </span>
             <img src="../../assets/images/img_jianbian.png" alt="">
           </div>
-          <div @click="hrefone" class="ck-mx">{{$t('financeEarnings.detailed')}}</div>
+          <div @click="hrefone" class="ck-mx">
+            <!-- 查看明细 -->
+            {{$t('financeEarnings.detailed')}}
+          </div>
         </div>
         <div class="item-middle">
           <div class="item-m-p">
-            <span>{{$t('financeEarnings.dq_balance')}}</span>
+            <span style="min-width:64px;">
+              <!-- 当前余额 -->
+              {{$t('financeEarnings.dq_balance')}}
+            </span>
             <!-- <span class="rectangle" :style="{ width: date.totalCash/100 + 'px' }" style="background:rgba(255, 171, 79, 1)"></span> -->
             <div class="middle-m">
               <div class="middle-m-d" :style="{ width: date.totalCash/100 + 'px' }" style="background:rgba(255, 171, 79, 1);"></div>
@@ -25,21 +34,36 @@
           </div>
         </div>
         <p>
-          <span @click="withdraws" style="margin-right:20px;">{{$t('financeEarnings.withdrawal')}}</span>
-          <span @click="topups">{{$t('financeEarnings.recharge')}}</span>
+          <span @click="withdraws" style="margin-right:20px;">
+            <!-- 提现 -->
+            {{$t('financeEarnings.withdrawal')}}
+          </span>
+          <span @click="topups">
+          <!-- 充值 -->
+          {{$t('financeEarnings.recharge')}}
+          </span>
         </p>
       </li>
       <li class="item">
         <div>
           <div class="item-top">
-            <span>{{$t('financeEarnings.title_2')}}</span>
+            <span>
+              <!-- 动态钱包收益 -->
+              {{$t('financeEarnings.title_2')}}
+            </span>
             <img src="../../assets/images/img_jianbian.png" alt="">
           </div>
-          <div @click="hrefthree" class="ck-mx">{{$t('financeEarnings.detailed')}}</div>
+          <div @click="hrefthree" class="ck-mx">
+            <!-- 查看明细 -->
+            {{$t('financeEarnings.detailed')}}
+          </div>
         </div>
         <div class="item-middle">
           <div class="item-m-p">
-            <span>{{$t('financeEarnings.lj_income')}}</span>
+            <span>
+              <!-- 累计收益 -->
+              {{$t('financeEarnings.lj_income')}}
+            </span>
             <!-- <span class="rectangle" :style="{ width: cashData.actCash/100 + 'px' }" style="background:rgba(255, 171, 79, 1)"></span> -->
             <div class="middle-m">
               <div class="middle-m-d" :style="{ width: date.actCash/100 + 'px' }" style="background:rgba(255, 171, 79, 1);"></div>
@@ -47,7 +71,10 @@
             <span style="color:#fff;"><span style="margin-right:10px">$</span>{{date.actCash}}</span>
           </div>
           <div class="item-m-p">
-            <span>{{$t('financeEarnings.jr_earnings')}}</span>
+            <span>
+              <!-- 今日收益 -->
+              {{$t('financeEarnings.jr_earnings')}}
+            </span>
             <!-- <span class="rectangle" :style="{ width: cashData.actCashDay/100 + 'px' }" style="background:rgba(236, 105, 65, 1)"></span> -->
             <div class="middle-m">
               <div class="middle-m-d" :style="{ width: date.actCashDay/100 + 'px' }" style="background:rgba(236, 105, 65, 1);"></div>
@@ -62,15 +89,24 @@
       <li class="item">
         <div>
           <div class="item-top">
-            <span>{{$t('financeEarnings.title_3')}}</span>
+            <span>
+              <!-- 静态钱包收益 -->
+              {{$t('financeEarnings.title_3')}}
+            </span>
             <img src="../../assets/images/img_jianbian.png" alt="">
           </div>
-          <div @click="hreftwo" class="ck-mx">{{$t('financeEarnings.detailed')}}</div
+          <div @click="hreftwo" class="ck-mx">
+            <!-- 查看明细 -->
+            {{$t('financeEarnings.detailed')}}
+          </div
           >
         </div>
         <div class="item-middle">
           <div class="item-m-p">
-            <span>{{$t('financeEarnings.lj_income')}}</span>
+            <span>
+              <!-- 累计收益 -->
+              {{$t('financeEarnings.lj_income')}}
+            </span>
             <!-- <span class="rectangle" :style="{ width: cashData.staCash/100 + 'px' }" style="background:rgba(255, 171, 79, 1)"></span> -->
             <div class="middle-m">
               <div class="middle-m-d" :style="{ width: date.staCash/100 + 'px' }" style="background:rgba(255, 171, 79, 1);"></div>
@@ -78,7 +114,10 @@
             <span style="color:#fff;"><span style="margin-right:10px">$</span>{{date.staCash}}</span>
           </div>
           <div class="item-m-p">
-            <span>{{$t('financeEarnings.jr_earnings')}}</span>
+            <span>
+              <!-- 今日收益 -->
+              {{$t('financeEarnings.jr_earnings')}}
+            </span>
             <!-- <span class="rectangle" :style="{ width: cashData.staCashDay/100 + 'px' }" style="background:rgba(236, 105, 65, 1)"></span> -->
             <div class="middle-m">
               <div class="middle-m-d" :style="{ width: date.staCashDay/100 + 'px' }" style="background:rgba(236, 105, 65, 1);"></div>
@@ -93,14 +132,23 @@
       <li class="item">
         <div>
           <div class="item-top">
-            <span>{{$t('financeEarnings.title_4')}}</span>
+            <span>
+              <!-- 积分收益 -->
+              {{$t('financeEarnings.title_4')}}
+            </span>
             <img src="../../assets/images/img_jianbian.png" alt="">
           </div>
-          <div @click="hreffour" class="ck-mx">{{$t('financeEarnings.detailed')}}</div>
+          <div @click="hreffour" class="ck-mx">
+            <!-- 查看明细 -->
+            {{$t('financeEarnings.detailed')}}
+          </div>
         </div>
         <div class="item-middle">
           <div class="item-m-p" style="margin-left:-28px;">
-            <span>{{$t('financeEarnings.lj_integral')}}</span>
+            <span>
+              <!-- 累计积分收益 -->
+              {{$t('financeEarnings.lj_integral')}}
+            </span>
             <!-- <span class="rectangle" :style="{ width: date.totalCash/100 + 'px' }" style="background:rgba(255, 171, 79, 1)"></span> -->
             <div class="middle-m">
               <div class="middle-m-d" :style="{ width: date.creditPoint/100 + 'px' }" style="background:rgba(255, 171, 79, 1);"></div>
@@ -116,23 +164,29 @@
         <h4>
           <!-- <span>一键复投</span>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt /> -->
-          <div><span>{{$t('financeEarnings.recharge')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div><span>{{val}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
         <div style="height:200px;line-height:200px;text-align:center;">
           <p></p>
-          <p class="desc-box">是否跳转购买产品页面？</p>
+          <p class="desc-box">
+            是否跳转购买产品页面？
+          </p>
         </div>
         <div class="bottom-btn">
-          <span @click="voting">{{$t('financeEarnings.sure')}}</span>
-          <span @click="contribute">{{$t('financeEarnings.email')}}</span>
+          <span @click="voting">
+            确定
+          </span>
+          <span @click="contribute">
+            取消
+          </span>
         </div>
       </div>
       <!-- 充值 -->
       <div v-if="cashmoney" class="fuCeng-m-b">
         <h4>
           <!-- <span>{{val}}账户</span> -->
-          <div><span>{{$t('financeEarnings.recharge')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div><span>{{val}} {{$t('financeEarnings.account')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
         <div style="margin-top:20px!important;">
@@ -150,6 +204,10 @@
               >
                 <span>{{i.name}}</span>
                 <span>{{i.token}}</span>
+                <el-button size="mini" type="infor" class="copy" data-clipboard-action="copy" :data-clipboard-text="i.token" @click="copyUrl">
+                  <!-- 点击复制 -->
+                  {{$t('financeEarnings.click_to_copy')}}
+                </el-button>
               </div>
             </div>
           </div>
@@ -158,28 +216,37 @@
           <span
             @click="notarizeTopup"
             class="sure-btn"
-          >{{$t('financeEarnings.sure')}}</span>
+          >
+          <!-- 确定 -->
+          {{$t('financeEarnings.sure')}}
+          </span>
         </p>
       </div>
       <!-- 提现 -->
       <div v-if="topupmoney">
         <h4 style="padding:20px 20px 5px;">
-          <div><span>{{$t('financeEarnings.withdrawal')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <!-- <span>{{val}}</span>
+          <img @click="contribute" src="../../assets/logo/cuo.png" alt /> -->
+          <div><span>{{$t('financeEarnings.withdrawal_account')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
         <div class="tx-box">
           <div class="item">
-            <div>{{$t('financeEarnings.email')}}：</div>
+            <div>
+              <!-- 邮箱 -->
+              {{$t('financeEarnings.email')}}：</div>
             <div>
               {{user.email}}
             </div>
           </div>
           <div class="item">
-            <div>{{$t('financeEarnings.VerificationCode')}}:</div>
+            <div>
+              <!-- 验证码 -->
+              {{$t('financeEarnings.VerificationCode')}}：</div>
             <div>
               <input
                 type="text"
-                placeholder=""
+                :placeholder="$t('financeEarnings.enter_verification_code')"
                 oninput="value=value.replace(/[^\d]/g,'')"
                 v-model="orderWithdraw.code"
                 style="width:255px;"
@@ -188,35 +255,38 @@
             </div>
           </div>
           <div class="item">
-            <div>{{$t('financeEarnings.cash_amount')}}：</div>
+            <div style="width:100px;">{{$t('financeEarnings.cash_amount')}}：</div>
             <div>
               <input
                 style=""
                 type="text"
-                placeholder=""
+                :placeholder="$t('financeEarnings.enter_the_amount')"
                 oninput="value=value.replace(/[^\d]/g,'')"
                 v-model="orderWithdraw.amount"
-              />$（{{$t('financeEarnings.cash_amount')}}）
+              />
+              <span style="display:inline-block; width:150px;">$（{{$t('financeEarnings.no_more')}}）</span>
             </div>
           </div>
           <div class="item">
-            <div>{{$t('financeEarnings.cash_adress')}}:</div>
+            <div>{{$t('financeEarnings.cash_adress')}}：</div>
             <div>
               <input
                 style=""
                 type="text"
-                placeholder=""
+                :placeholder="$t('financeEarnings.input_pl_2')"
                 v-model="orderWithdraw.tokenId"
               />
             </div>
           </div>
           <div class="item">
-            <div>{{$t('financeEarnings.remarks')}}：</div>
+            <div>
+              <!-- 备注 -->
+              {{$t('financeEarnings.remarks')}}：</div>
             <div>
               <input
                 style=""
                 type="text"
-                placeholder=""
+                :placeholder="$t('financeEarnings.input_pl_3')"
                 v-model="orderWithdraw.remark"
               />
             </div>
@@ -227,7 +297,10 @@
           <span
             style="color:#fff;"
             @click="notarize"
-          >{{$t('financeEarnings.sure')}}</span>
+          >
+          <!-- 确定 -->
+          {{$t('financeEarnings.sure')}}
+          </span>
         </p>
         <!-- <span @click="contribute">取消</span> -->
       </div>
@@ -236,40 +309,50 @@
     <div v-show="FCA" class="fuCeng">
       <div>
         <h4>
-          <div><span>{{$t('financeEarnings.recharge')}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div><span>{{val}}</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
 
             <!-- oninput="value=value.replace(/[^\d]/g,'')" -->
         <p style="padding:0 30px 10px 30px;margin-top:28px;">
-          {{$t('financeEarnings.cash_amount')}}：
+          {{val}} {{$t('financeEarnings.amount')}}：
           <input
             style="margin-right:30px;width:200px; border-radius: 2px;border:1px solid #fff"
             type="text"
-            placeholder=""
+            :placeholder="$t('financeEarnings.enter_the_amount')"
             oninput="value=value.replace(/[^\d]/g,'')"
             v-model="orderToup.amount"
             min="0.01"
           />$
         </p>
         <p style="padding:0px 30px 10px 30px">
+          <!-- 交易单号 -->
           {{$t('financeEarnings.jy_number')}}：
           <input
             style="margin-right:30px;width:200px; border-radius: 2px;border:1px solid #fff"
             type="text"
-            placeholder=""
+            :placeholder="$t('financeEarnings.input_pl_4')"
             v-model="orderToup.tokenId"
           />
         </p>
         <p style="padding:0px 30px">
-          {{$t('financeEarnings.cash_adress')}}：
+          {{val}} {{$t('financeEarnings.address')}}：
           <span style="color:gray">{{topup_a.token}}</span>
         </p>
+        <!-- <p style="display:flex;justify-content: center;margin-top:20px">
+          <span
+            style="color:#fff;background: #4986ff;padding:5px 20px;border-radius: 2px"
+            @click="notarize"
+          >确定</span>
+        </p> -->
         <p class="tx-btn" style="display:flex;justify-content: center;margin-top:20px">
           <span
             style="color:#fff;"
             @click="notarize"
-          >{{$t('financeEarnings.sure')}}</span>
+          >
+          <!-- 确定 -->
+          {{$t('financeEarnings.sure')}}
+          </span>
         </p>
       </div>
     </div>
@@ -278,7 +361,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { financeEarnings } from '@/utils/i18n'// 国际化主题名字
 import {
   finan,
   finana,
@@ -289,6 +371,8 @@ import {
   toup,
   getEmailCode
 } from "@/api/finance";
+  import Cookies from 'js-cookie'
+  var lang=Cookies.get('language') || 'en';
 // import { getEmailCode } from '@/api/code'
 export default {
   data() {
@@ -331,9 +415,18 @@ export default {
         totalCash:0,//累计积分收益
       },
       email:'',
-      count: '获取验证码',
+      count: 'get verification code',//获取验证码
       timer: null,
-      disabled:true
+      disabled:true,
+      messages:'',
+      messagee:'',
+      enter_the_amount:'',
+      imported_gold_must_be_large:'',
+      please_enter_the_order_number:'',
+      congratulations_order:'',
+      enter_verification_code:'',
+      withdrawal_amount_large:'',
+      congratulations_successfully:'',
     };
   },
     computed: {
@@ -353,7 +446,27 @@ export default {
     }
   },
   methods: {
-    financeEarnings,
+		copyUrl(){
+      let _this = this;
+      if(lang=='en'){
+        _this.messages='successfully copy'
+        _this.messagee='Copy the failure'
+
+      }else{
+        _this.messages='复制成功!'
+        _this.messagee='复制失败!'
+      }
+     let clipboard = new this.clipboard(".copy");
+     clipboard.on('success', function () {
+       _this.$message({
+				 message:_this.messages,
+				 type:'success'
+			 })
+     });
+     clipboard.on('error', function () {
+				_this.$message.error(_this.messagee)
+     });
+    },
     // 充值单选
     button(e) {
       // console.log(1);
@@ -365,7 +478,7 @@ export default {
 
       // }
     },
-    //获取邮箱验证码
+    //提现时获取邮箱验证码
     getEmailCode(){
       console.log('111')
       const TIME_COUNT = 60;
@@ -373,30 +486,39 @@ export default {
         this.count = TIME_COUNT;
         // this.disabled = ture;
         this.timer = setInterval(() => {
-        if (this.count > 0 && this.count <= TIME_COUNT) {
-          this.count--;
-          this.disabled = false
-          } else {
-          this.disabled = true;
-          clearInterval(this.timer);
-          this.timer = null;
-          this.count='获取验证码'
-          }
-        }, 1000)
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+            this.disabled = false
+            } else {
+              this.disabled = true;
+              clearInterval(this.timer);
+              this.timer = null;
+              if (lang=="en") {
+                  this.count = 'get verification code'
+              }else{
+                  this.count='获取验证码'
+              }
+            }
+          }, 1000)
         }
       this.email=this.user.email
       console.log(this.email)
       var dataEmail={
         value:this.email
       }
-      getEmailCode().then(res => {
+      getEmailCode(1).then(res => {
           console.log(res);
         });
     },
     // 充值确认
     notarizeTopup() {
       if (this.current == 1000) {
-        alert("请选择支付方式");
+        // alert("请选择支付方式");//"请选择支付方式"
+        if (lang=="en") {
+          alert("Please select the payment method");
+        }else{
+          alert("请选择支付方式");
+        }
       } else {
         this.FC = false;
         this.FCA = true;
@@ -408,23 +530,43 @@ export default {
       // console.log(this.amount);
 
       var that = this;
+      if(lang=='en'){
+          that.enter_the_amount='Please enter the amount'
+          that.imported_gold_must_be_large='Imported gold must be large'
+          that.please_enter_the_order_number='Please enter the order number'
+          that.congratulations='Congratulations, the order has been generated'
+          that.enter_verification_code='Please enter verification code'
+          that.withdrawal_amount_large='The withdrawal amount cannot exceed the total amount'
+          that.please_enter_the_address='Please enter the address'
+          that.congratulations_successfully='Congratulations, submit successfully'
+
+        }else{
+          that.enter_the_amount='请输入金额!'
+          that.imported_gold_must_be_large='输入金额必须大于零!'
+          that.please_enter_the_order_number='请输入订单号!'
+          that.congratulations_order='恭喜你，订单已生成'
+          that.enter_verification_code='请输入验证码'
+          that.withdrawal_amount_large='提现额度不能大于总额度'
+          that.please_enter_the_address='请输入地址'
+          that.congratulations_successfully='恭喜你，提交成功'
+        }
       if (this.type == 1) {
         this.orderToup.thirdId = this.topup_a.token;
         if (that.orderToup.amount == "") {
           // alert("请输入金额");
            that.$message({
-            message: "请输入金额",
+            message: that.enter_the_amount,
             type: "none"
           });
         } else if(that.orderToup.amount <=0){
           that.$message({
-            message: "输入金额必须大于零",
+            message: that.imported_gold_must_be_large,
             type: "none"
           });
         } else if (that.orderToup.tokenId == "") {
           // alert("请输入订单号");
           that.$message({
-            message: "请输入订单号",
+            message: that.please_enter_the_order_number,
             type: "none"
           });
         } else {
@@ -436,7 +578,7 @@ export default {
             that.FCA = false;
             console.log(that.amount);
             that.$message({
-              message: "恭喜你，订单已生成",
+              message: that.congratulations,
               type: "success"
             });
 
@@ -454,15 +596,15 @@ export default {
       if (this.type == 2) {
         console.log(this.orderWithdraw);
         if (this.orderWithdraw.code == "") {
-          this.$message.error("请输入验证码");
+          this.$message.error(that.enter_verification_code);//"请输入验证码"
         }else if (this.orderWithdraw.amount == "") {
-          this.$message.error("请输入金额");
+          this.$message.error(that.enter_the_amount);//"请输入金额"
         }else if(this.orderWithdraw.amount <=0){
-          that.$message.error("输入金额必须大于零");
+          that.$message.error(that.imported_gold_must_be_large); //输入金额必须大于零
         } else if (this.orderWithdraw.amount > this.date.totalCash) {
-          this.$message.error("提现额度不能大于总额度");
+          this.$message.error(that.withdrawal_amount_large); //提现额度不能大于总额度
         } else if (this.orderWithdraw.tokenId == "") {
-          this.$message.error("请输入地址");
+          this.$message.error(that.please_enter_the_address); //请输入地址
         }  else {
           console.log(this.orderWithdraw);
           withdraw(this.orderWithdraw).then(res => {
@@ -472,7 +614,7 @@ export default {
             this.FC = false;
             this.FCA = false;
             this.$message({
-              message: "恭喜你，提交成功",
+              message: that.congratulations_successfully,//恭喜你，提交成功
               type: "success"
             });
             this.$router.push({
@@ -489,7 +631,13 @@ export default {
       this.centers = false;
       this.cashmoney = false;
       this.topupmoney = true;
-      this.val = "提现";
+      if (lang=="en") {
+          this.val = 'Withdrawal'
+          this.count='get verification code'
+      }else{
+          this.val = "提现";
+          this.count='获取验证码'
+      }
       this.FC = true;
       // withdraw().then(res => {
       //   // var data=JSON.parse(res.data)
@@ -502,7 +650,12 @@ export default {
       this.type = 1;
       this.centers = false;
       this.cashmoney = true;
-      (this.topupmoney = false), (this.val = "充值");
+      this.topupmoney = false;
+      if (lang=="en") {
+          this.val = 'Recharge'
+      }else{
+          this.val = "充值";
+      }
       this.FC = true;
       topup().then(res => {
         // var data=JSON.parse(res.data)
@@ -616,8 +769,27 @@ export default {
   input::-webkit-input-placeholder{
     color: #fff !important;
   }
+  .el-button{
+    color: #fff !important;
+    border-color: rgba(33, 191, 252, 1) !important;
+    background-color: rgba(24, 136, 203, 0.2) !important;
+  }
+  .el-button:hover, .el-button:focus{
+    color: #fff !important;
+    border-color: rgba(33, 191, 252, 1) !important;
+    background-color: rgba(24, 136, 203, 0.2) !important;
+  }
 </style>
 <style rel="stylesheet/scss" lang="scss" scoped>
+.ck-mx>span{
+  display: inline-block;
+  width:100%;
+  height: 30px;
+  margin:0;
+  text-align: center;
+  // height:30px;
+  line-height: 30px;
+}
 input{
   background: rgba(24, 136, 203, 0.3);
   margin-right:30px;
@@ -675,20 +847,17 @@ input{
       background: url('../../assets/images/ic_home_Viewdetails.png') no-repeat;
       background-size: 100% 100%;
       cursor: pointer;
+      display: inline-block;
+      text-align: center;
       line-height: 30px;
-      // text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
-
     .item-middle{
       height:180px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: flex-start;
-      margin-left: 25%;
+      margin-left: 18%;
       color: #FFFFFF;
       font-size: 16px;
       .item-m-p{
@@ -854,15 +1023,17 @@ input{
         margin-top: 14px;
         >div:first-of-type{
           width: 100px;
-          display: flex;
-          justify-content: flex-end;
+          display: inline-block;
+          text-align: right;
+          // display: flex;
+          // justify-content: flex-end;
           margin-right: 30px;
         }
         >div:last-of-type{
           display: flex;
           align-items: center;
           .yzm-btn{
-            width: 120px;
+            width: 160px;
             height: 40px;
             background: url('../../assets/images/bg_xuankuang.png') no-repeat;
             background-size: 100% 100%;

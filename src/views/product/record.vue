@@ -2,10 +2,19 @@
   <div class="wscn-http404-container">
     <div class="nav">
       <div class="block" style="width:100%!important">
-        <span class="demonstration" style="margin-left:30px;">自定义查询：</span>
-        <el-date-picker v-model="value6" :start-placeholder="beginDatePlaceHolder" style="border-width:0;" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" range-separator="至" @change="timeChange"/>
-        <span class="time" style="margin-left:100px" @click="queryData">查询</span>
-        <span :loading="downloadLoading" class="time" @click="exportTable">导出</span>
+        <span class="demonstration" style="margin-left:30px;">
+          <!-- 自定义查询 -->
+          {{$t('products.custom_query')}}
+          ：</span>
+        <el-date-picker v-model="value6" :start-placeholder="beginDatePlaceHolder" style="border-width:0;" :end-placeholder="endDatePlaceHolder" type="daterange" size="mini" :range-separator="$t('products.to')" @change="timeChange"/>
+        <span class="time" style="margin-left:100px" @click="queryData">
+          <!-- 查询 -->
+          {{$t('products.query')}}
+          </span>
+        <span :loading="downloadLoading" class="time" @click="exportTable">
+          <!-- 导出 -->
+          {{$t('products.export')}}
+          </span>
       </div>
     </div>
     <div style="width:100%!important;margin-top:20px">
@@ -15,21 +24,39 @@
         :header-row-class-name="handlemyclass"
          :row-class-name="setClassName"
       >
-        <el-table-column :cell-class-name="colorblueclass" prop="create_time" label="创建时间" align="center"></el-table-column>
-        <el-table-column prop="product_name" label="产品名称" align="center"></el-table-column>
-        <el-table-column prop="order_status" label="订单状态" align="center">
+        <el-table-column :cell-class-name="colorblueclass" prop="create_time" :label="$t('products.creationdate')" align="center"></el-table-column>
+        <el-table-column prop="product_name" :label="$t('products.productname')" align="center"></el-table-column>
+        <el-table-column prop="order_status"  :label="$t('products.order_status')" align="center">
           <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.order_status==300">购买成功</el-tag>
-            <el-tag type="success" v-if="scope.row.order_status==500">已完成订单</el-tag>
-            <el-tag type="danger"  v-if="scope.row.order_status==100">购买失败</el-tag>
-            <el-tag  type="danger" v-if="scope.row.order_status==200">购买失败</el-tag>
-            <el-tag type v-if="scope.row.order_status==400">设备待分配</el-tag>
-          </template>
+              <el-tag type="success" v-if="scope.row.order_status==300">
+                <!-- 购买成功 -->
+               {{$t('products.purchase_succeeded')}}
+              </el-tag>
+              <el-tag type="success" v-if="scope.row.order_status==500">
+                <!-- 已完成订单 -->
+               {{$t('products.completed_order')}}
+              </el-tag>
+              <el-tag type="danger"  v-if="scope.row.order_status==100" style="color:rgba(255, 65, 7, 1)">
+                <!-- 购买失败 -->
+               {{$t('products.purchase_failed')}}
+
+              </el-tag>
+              <el-tag  type="danger" v-if="scope.row.order_status==200" style="color:rgba(255, 65, 7, 1)">
+                <!-- 购买失败 -->
+               {{$t('products.purchase_failed')}}
+
+              </el-tag>
+              <el-tag type v-if="scope.row.order_status==400">
+                <!-- 设备待分配 -->
+               {{$t('products.Equipment_to_be_allocated')}}
+
+                </el-tag>
+            </template>
         </el-table-column>
 
-        <el-table-column prop="product_amount" label="产品金额（$）" align="center"></el-table-column>
-        <el-table-column prop="merchant_order_id" label="流水号" align="center"></el-table-column>
-        <el-table-column prop="investor_name" label="会员" align="center"></el-table-column>
+        <el-table-column prop="product_amount" :label="$t('products.product_amount')" align="center"></el-table-column>
+        <el-table-column prop="merchant_order_id" :label="$t('products.serial_number')" align="center"></el-table-column>
+        <el-table-column prop="investor_name" :label="$t('products.member')" align="center"></el-table-column>
       </el-table>
     </div>
     <!-- 分页器 -->
@@ -66,7 +93,10 @@
   import { record, recordQuery } from '@/api/produc'
   import moment from 'moment'
   import { formatDate } from '../../utils/date.js'
+  import {fptproduct} from '@/utils/i18n'
 
+  import Cookies from 'js-cookie'
+  var lang=Cookies.get('language') || 'en';
   export default {
     data() {
       return {
@@ -99,6 +129,7 @@
       this.request()
     },
     methods: {
+      fptproduct,
       handlemyclass: function(row, column, rowIndex, columnIndex) {
         return 'test'
       },
@@ -155,31 +186,63 @@
             // 转换购买状态
             data.forEach((v, i) => {
               data[i].product_amount = data[i].product_amount/data[i].num;
-              if (data[i].order_status === 300) {
-                data[i].order_status = '购买成功'
-              } else if (data[i].order_status === 500) {
-                data[i].order_status = '已完成订单'
-              } else if (data[i].order_status === 100) {
-                data[i].order_status = '未支付'
-              }else if (data[i].order_status === 200) {
-                data[i].order_status = '购买失败'
-              }else if (data[i].order_status === 400) {
-                data[i].order_status = '设备待分配'
-              }else if (data[i].order_status === 600) {
-                data[i].order_status = '退款中'
-              }else if (data[i].order_status === 700) {
-                data[i].order_status = '退款失败'
-              }else if (data[i].order_status === 800) {
-                data[i].order_status = '退款成功'
+              if(lang=='en'){
+                if (data[i].order_status === 300) {
+                  data[i].order_status = 'Purchase succeeded'
+                } else if (data[i].order_status === 500) {
+                  data[i].order_status = 'Completed order'
+                } else if (data[i].order_status === 100) {
+                  data[i].order_status = 'Purchase failed'
+                }else if (data[i].order_status === 200) {
+                  data[i].order_status = 'Purchase failed'
+                }else if (data[i].order_status === 400) {
+                  data[i].order_status = 'Equipment to be allocated'
+                }
+                // else if (data[i].order_status === 600) {
+                //   data[i].order_status = '退款中'
+                // }else if (data[i].order_status === 700) {
+                //   data[i].order_status = '退款失败'
+                // }else if (data[i].order_status === 800) {
+                //   data[i].order_status = '退款成功'
+                // }
+              }else{
+                if (data[i].order_status === 300) {
+                  data[i].order_status = '购买成功'
+                } else if (data[i].order_status === 500) {
+                  data[i].order_status = '已完成订单'
+                } else if (data[i].order_status === 100) {
+                  data[i].order_status = '购买失败'
+                }else if (data[i].order_status === 200) {
+                  data[i].order_status = '购买失败'
+                }else if (data[i].order_status === 400) {
+                  data[i].order_status = '设备待分配'
+                }
+                // else if (data[i].order_status === 600) {
+                //   data[i].order_status = '退款中'
+                // }else if (data[i].order_status === 700) {
+                //   data[i].order_status = '退款失败'
+                // }else if (data[i].order_status === 800) {
+                //   data[i].order_status = '退款成功'
+                // }
               }
             })
-            require.ensure([], () => {
-              const { export_json_to_excel } = require('@/utils/Export2Excel.js') //引入文件
-              const tHeader = ['创建时间', '产品名称', '订单状态', '产品金额（$）', '流水号', '会员'] //将对应的属性名转换成中文
-              const filterVal = ['create_time', 'product_name', 'order_status', 'product_amount', 'merchant_order_id', 'investor_name'] //table表格中对应的属性名
-              data = this.formatJson(filterVal, data)
-              export_json_to_excel(tHeader, data, '购买记录excel')
-            })
+            if(lang=='en'){
+              require.ensure([], () => {
+                const { export_json_to_excel } = require('@/utils/Export2Excel.js') //引入文件
+                const tHeader = ['Creation date', 'Product name', 'Order Status', 'Product amount（$）', 'Perial number', 'Member'] //将对应的属性名转换成中文
+                const filterVal = ['create_time', 'product_name', 'order_status', 'product_amount', 'merchant_order_id', 'investor_name'] //table表格中对应的属性名
+                data = this.formatJson(filterVal, data)
+                export_json_to_excel(tHeader, data, 'Purchase record excel')
+              })
+            }else{
+              require.ensure([], () => {
+                const { export_json_to_excel } = require('@/utils/Export2Excel.js') //引入文件
+                const tHeader = ['创建时间', '产品名称', '订单状态', '产品金额（$）', '流水号', '会员'] //将对应的属性名转换成中文
+                const filterVal = ['create_time', 'product_name', 'order_status', 'product_amount', 'merchant_order_id', 'investor_name'] //table表格中对应的属性名
+                data = this.formatJson(filterVal, data)
+                export_json_to_excel(tHeader, data, '购买记录excel')
+              })
+            }
           }
         })
       },

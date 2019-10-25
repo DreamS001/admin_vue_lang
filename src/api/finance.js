@@ -64,9 +64,9 @@ export function pages() {
   })
 }
 //提现时获取验证码
-export function getEmailCode() {
+export function getEmailCode(type) {
   return request({
-    url: 'api/finance/code',
+    url: 'api/finance/code/'+type,
     method: 'get'
   })
 }
@@ -159,6 +159,38 @@ export function cashlist(date,type,pageNo, pageSize) {
 export function integral(pageNo, pageSize, startDate, endDate, name) {
   return request({
     url: 'api/finance/credit?pageNo=' + pageNo + '&pageSize=' + pageSize + '&startDate=' + startDate + '&endDate=' + endDate + "&name=" + name,
+    method: 'get'
+  })
+}
+// 充值财务审核记录列表
+export function rechargelog(pageNo, pageSize, startDate, endDate, name,name1,name2,name3,name4) {
+  return request({
+    url: 'api/finance/auditlogs/1?pageNo=' + pageNo + '&pageSize=' + pageSize + '&startDate=' + startDate + '&endDate=' + endDate + "&name=" + name +"&name1=" + name1+"&name2=" + name2+"&name3=" + name3+ "&name4=" + name4,
+    method: 'get'
+  })
+}
+// 提现财务审核记录列表
+export function withdrawlog(pageNo, pageSize, startDate, endDate, name,name1,name2,name3,name4) {
+  return request({
+    url: 'api/finance/auditlogs/2?pageNo=' + pageNo + '&pageSize=' + pageSize + '&startDate=' + startDate + '&endDate=' + endDate + "&name=" + name +"&name1=" + name1+"&name2=" + name2+"&name3="+ name3+ "&name4=" + name4,
+    method: 'get'
+  })
+}
+
+
+// 转账提交
+export function transfersumbit(data) {
+  return request({
+    url: 'api/finance/transfer',
+    method: 'post',
+    data
+  })
+}
+
+// 转账记录列表
+export function transferlog(pageNo, pageSize, startDate, endDate, name,name1,name2,name3) {
+  return request({
+    url: 'api/finance/transfer/logs?pageNo=' + pageNo + '&pageSize=' + pageSize + '&startDate=' + startDate + '&endDate=' + endDate + "&name=" + name +"&name1=" + name1+"&name2=" + name2+"&name3="+ name3,
     method: 'get'
   })
 }

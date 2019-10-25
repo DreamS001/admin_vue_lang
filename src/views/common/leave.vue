@@ -189,8 +189,10 @@ export default {
       // });
       messageAll(this.pageNo, this.pageSize, this.beginDate, this.endDate,this.merchant).then(
           res => {
-            this.list = eval(res.list)
-            this.total = res.total
+            if(res.code==200){
+              this.list = eval(res.data.list)
+              this.total = res.data.total
+            }
           }
         )
     },

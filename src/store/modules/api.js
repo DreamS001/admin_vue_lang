@@ -9,7 +9,7 @@ if (process.env.NODE_ENV == 'development') {
     // baseUrl = "http://fpt.urfpt.com";
     baseUrl = "http://investor.jie360.com.cn";
 }else if(process.env.NODE_ENV == 'production'){
-    baseUrl = "https://pc.urfpt.com";
+    baseUrl = "https://pc.fptvip.com";
 }
 
 const api = {

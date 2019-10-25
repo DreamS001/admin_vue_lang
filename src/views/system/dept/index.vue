@@ -3,11 +3,14 @@
     <!--工具栏-->
     <div class="head-container">
       <!-- 搜索 -->
-      <el-input v-model="query.value" clearable placeholder="输入部门代理编码" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery"/>
-      <el-select v-model="query.enabled" clearable placeholder="状态" class="filter-item" style="width: 90px" @change="toQuery">
+      <el-input v-model="query.value" clearable :placeholder="$t('systemes.proxy_code_search')"  style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery"/>
+      <el-select v-model="query.enabled" clearable :placeholder="$t('systemes.status')" class="filter-item" style="width: 90px" @change="toQuery">
         <el-option v-for="item in enabledTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
       </el-select>
-      <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="toQuery">搜索</el-button>
+      <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="toQuery">
+        <!-- 搜索 -->
+        {{$t('systemes.search')}}
+      </el-button>
       <!-- 新增 -->
       <!-- <div v-permission="['ADMIN','DEPT_ALL','DEPT_CREATE']" style="display: inline-block;margin: 0px 2px;">
         <el-button
@@ -23,7 +26,7 @@
           size="mini"
           type="warning"
           icon="el-icon-more"
-          @click="changeExpand">{{ $parent.expand ? '折叠' : '展开' }}</el-button>
+          @click="changeExpand">{{ expand ? fold : expands }}</el-button>
         <eForm ref="form" :is-add="true" :dicts="dicts"/>
       </div>
     </div>
@@ -31,24 +34,29 @@
     <eForm ref="form" :is-add="isAdd" :dicts="dicts"/>
     <!--表格渲染-->
     <tree-table :expand-all="expand" :data="data" :columns="columns" size="medium" :row-class-name="setClassName" :header-row-class-name="handlemyclass">
-      <el-table-column label="代理编码" align="center">
+      <el-table-column :label="$t('systemes.proxy_code')" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.merchantCode }}</span>
         </template>
       </el-table-column>
-			<el-table-column label="推广链接" align="center">
+			<el-table-column :label="$t('systemes.sponsored_links')" align="center">
 			  <template slot-scope="scope">
-			    <el-button size="mini" type="infor" class="copy" data-clipboard-action="copy" :data-clipboard-text="'http://investor.jie360.com.cn/register/?key='+scope.row.registerUrl" @click="copyUrl">点击复制</el-button>
+			    <el-button size="mini" type="infor" class="copy" data-clipboard-action="copy" :data-clipboard-text="'https://wap.fptvip.com/register/?key='+scope.row.registerUrl" @click="copyUrl">
+          <!-- 点击复制 -->
+          {{$t('systemes.click_to_copy')}}
+          </el-button>
 			  </template>
 			</el-table-column>
-			<el-table-column label="状态" align="center">
+			<el-table-column :label="$t('systemes.status')" align="center">
         <template slot-scope="scope">
-          <div v-for="item in dicts" :key="item.id">
+          <!-- <div v-for="item in dicts" :key="item.id">
             <el-tag v-if="scope.row.enabled.toString() === item.value" :type="scope.row.enabled ? '' : 'info'">{{ item.label }}</el-tag>
-          </div>
+          </div> -->
+          <el-tag v-if="scope.row.enabled.toString() === 'true'">{{$t('systemes.activation')}}</el-tag>
+          <el-tag v-else>{{$t('systemes.lock')}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" label="创建日期">
+      <el-table-column prop="createTime" :label="$t('systemes.creationdate')">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -82,11 +90,19 @@ import initDict from '@/mixins/initDict'
 import { del } from '@/api/dept'
 import { parseTime } from '@/utils/index'
 import eForm from './form'
+
+import  Cookies from 'js-cookie'
+var lang=Cookies.get('language') || 'en';
+
 export default {
   components: { eForm, treeTable },
   mixins: [initData, initDict],
   data() {
     return {
+      messages:'',
+      messagee:'',
+      fold:'fold',
+      expands:'expand',
       columns: [
         {
           text: '名称',
@@ -101,10 +117,28 @@ export default {
     }
   },
   created() {
+    if(lang=='en'){
+      this.columns=[{text:'name', value:'name'}]
+      this.enabledTypeOptions=[
+        { key: 'true', display_name: 'normal' },
+        { key: 'false', display_name: 'forbidden' }
+      ]
+      this.fold='fold'
+      this.expands='expand'
+
+    }else{
+      this.columns=[{text:'名称',value:'name'}]
+      this.enabledTypeOptions=[
+        { key: 'true', display_name: '正常' },
+        { key: 'false', display_name: '禁用' }
+      ]
+      this.fold='折叠'
+      this.expands='展开'
+    }
     this.$nextTick(() => {
       this.init()
       // 加载数据字典
-      this.getDict('dept_status')
+      // this.getDict('dept_status')
     })
   },
   methods: {
@@ -127,8 +161,9 @@ export default {
         this.delLoading = false
         this.$refs[id].doClose()
         this.init()
+
         this.$notify({
-          title: '删除成功',
+
           type: 'success',
           duration: 2500
         })
@@ -162,16 +197,28 @@ export default {
       _this.dialog = true
     },
 		copyUrl(){
-			let _this = this;
+      let _this = this;
+      if(lang=='en'){
+          _this.messages='successfully copy'
+          _this.messagee='Copy the failure'
+
+        }else{
+          _this.messages='复制成功!'
+          _this.messagee='复制失败!'
+        }
      let clipboard = new this.clipboard(".copy");
      clipboard.on('success', function () {
+       console.log(_this)
+
        _this.$message({
-				 message:'复制成功!',
+
+				 message:_this.messages,
+				//  message:'复制成功!',
 				 type:'success'
 			 })
      });
      clipboard.on('error', function () {
-				_this.$message.error("复制失败!")
+				_this.$message.error(_this.messagee)
      });
     },
     setClassName({row, rowIndex}) {

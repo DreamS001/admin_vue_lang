@@ -20,8 +20,10 @@
         <el-col :xs="24" :sm="24" :lg="24" style="padding:0;important">
           <div class="world-box chart-wrapper">
             <div class="equipment">
-              <!-- 设备分布 -->
-              <span>{{$t('navbar.EDA')}}</span>
+              <span>
+                <!-- 设备分布 -->
+                {{$t('navbar.EDA')}}
+                </span>
               <img src="../assets/images/img_jianbian.png" alt="" srcset="">
             </div>
             <div class="chart-wrapper mapp world-bottom">
@@ -31,28 +33,40 @@
               </div>
               <div class="data-boxs">
                 <div class="item-middle">
-                  <div class="middle-left">{{$t('navbar.gmv')}}</div>
+                  <div class="middle-left">
+                    <!-- 交易总额 -->
+                    {{$t('navbar.gmv')}}
+                  </div>
                   <div class="middle-m">
                     <div class="middle-m-d" :style="{ width: navdata.trade_num/100000 + 'px' }" style="background:rgba(255, 171, 79, 1);"></div>
                   </div>
                   <div class="middle-right">${{navdata.trade_num}}</div>
                 </div>
                 <div class="item-middle">
-                  <div class="middle-left">{{$t('navbar.totaltransactions')}}</div>
+                  <div class="middle-left">
+                    <!-- 交易笔数 -->
+                    {{$t('navbar.totaltransactions')}}
+                  </div>
                   <div class="middle-m">
                     <div class="middle-m-d" :style="{ width: navdata.trade_amount/100000 + 'px' }" style="background:rgba(236, 105, 65, 1);"></div>
                   </div>
                   <div class="middle-right">{{navdata.trade_amount}}</div>
                 </div>
                 <div class="item-middle">
-                  <div class="middle-left">{{$t('navbar.totalnumberdevices')}}</div>
+                  <div class="middle-left">
+                    <!-- 总设备数 -->
+                    {{$t('navbar.totalnumberdevices')}}
+                  </div>
                   <div class="middle-m">
                     <div class="middle-m-d" :style="{ width: navdata.device_num/100000 + 'px' }" style="background:rgba(0, 170, 255, 1);"></div>
                   </div>
                   <div class="middle-right">{{navdata.device_num}} {{$t('navbar.platform')}}</div>
                 </div>
                 <div class="item-middle">
-                  <div class="middle-left">{{$t('navbar.totalinvestment')}}</div>
+                  <div class="middle-left">
+                    <!-- 总投资 -->
+                  {{$t('navbar.totalinvestment')}}
+                  </div>
                   <div class="middle-m">
                     <div class="middle-m-d" :style="{ width: navdata.total_investment/100000 + 'px' }" style="background:rgba(43, 250, 255, 1);"></div>
                   </div>
@@ -86,7 +100,6 @@ import banner3 from "./dashboard/banner3";
 import { count } from "@/api/visits";
 import {mapp}  from "@/api/map";
 import { getToken } from "@/utils/auth";
-import { fpthome } from '@/utils/i18n'
 /**
  * 记录访问，只有页面刷新或者第一次加载才会记录
  */
@@ -119,7 +132,6 @@ export default {
     ...mapGetters(["roles"])
   },
   methods:{
-    fpthome,
   },
   created() {
     mapp().then(res => {
@@ -208,7 +220,7 @@ export default {
         color: #FFFFFF;
         // margin-top: 44px;
         .middle-left{
-          width: 150px;
+          width: 80px;
         }
         // .middle-m{
         //   width: 100px;
@@ -282,7 +294,7 @@ export default {
         margin-left: 2%;
       }
       .data-boxs{
-        width: 550px;
+        width: 510px;
         // min-width: 1056px;
 
         .item-middle{
@@ -291,8 +303,7 @@ export default {
           color: #FFFFFF;
           margin-top: 30px;
           .middle-left{
-            width: 180px;
-            text-align: right;
+            width: 80px;
           }
           // .middle-m{
           //   width: 100px;

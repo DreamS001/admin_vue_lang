@@ -4,7 +4,7 @@
       <el-col :xs="24" :sm="24" :md="8" :lg="6" :xl="5">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>个人信息</span>
+            <span>{{$t('financeCash.p_info')}}</span>
           </div>
           <div>
             <!-- action="http://shipz.jie360.com.cn/api/product/upload/" -->
@@ -21,16 +21,16 @@
               </el-upload>
             </div>
             <ul class="user-info">
-              <li><svg-icon icon-class="user1" /> 用户名称 <div class="user-right">{{ user.username }}</div></li>
-              <li><svg-icon icon-class="phone" /> 手机号码 <div class="user-right">{{ user.phone }}</div></li>
-              <li><svg-icon icon-class="email" /> 用户邮箱 <div class="user-right">{{ user.email }}</div></li>
-              <li><svg-icon icon-class="dept" /> 所属部门 <div class="user-right"> {{ user.dept }} / {{ user.job }}</div></li>
-              <li><svg-icon icon-class="date" /> 创建日期 <div class="user-right">{{ parseTime(user.createTime) }}</div></li>
+              <li><svg-icon icon-class="user1" /> {{$t('financeCash.user_name')}} <div class="user-right">{{ user.username }}</div></li>
+              <li><svg-icon icon-class="phone" /> {{$t('financeCash.phone_number')}} <div class="user-right">{{ user.phone }}</div></li>
+              <li><svg-icon icon-class="email" /> {{$t('financeCash.user_email')}} <div class="user-right">{{ user.email }}</div></li>
+              <li><svg-icon icon-class="dept" /> {{$t('financeCash.subordinate_departments')}} <div class="user-right"> {{ user.dept }} / {{ user.job }}</div></li>
+              <li><svg-icon icon-class="date" /> {{$t('financeCash.date_of_creation')}} <div class="user-right">{{ parseTime(user.createTime) }}</div></li>
               <li>
-                <svg-icon icon-class="anq" /> 安全设置
+                <svg-icon icon-class="anq" /> {{$t('financeCash.security_setting')}}
                 <div class="user-right">
-                  <a @click="$refs.pass.dialog = true">修改密码</a>
-                  <a @click="$refs.email.dialog = true">修改邮箱</a>
+                  <a @click="$refs.pass.dialog = true">{{$t('financeCash.change_password')}}</a>
+                  <a @click="$refs.email.dialog = true">{{$t('financeCash.modify_mailbox')}}</a>
                 </div>
               </li>
             </ul>
@@ -40,21 +40,21 @@
       <el-col :xs="24" :sm="24" :md="16" :lg="18" :xl="19">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>操作日志</span>
+            <span>{{$t('financeCash.operation_log')}}</span>
             <div style="display:inline-block;float: right;cursor: pointer" @click="refresh"><i :class="ico"/></div>
           </div>
           <div>
             <el-table  :data="data" size="small" style="width: 100%;" :row-class-name="setClassName">
-              <el-table-column prop="description" label="行为"/>
+              <el-table-column prop="description" :label="$t('financeCash.behavior')"/>
               <el-table-column prop="requestIp" label="IP"/>
-              <el-table-column prop="time" label="请求耗时" align="center">
+              <el-table-column prop="time" :label="$t('financeCash.request_time_consuming')" align="center">
                 <template slot-scope="scope">
                   <el-tag v-if="scope.row.time <= 300">{{ scope.row.time }}ms</el-tag>
                   <el-tag v-else-if="scope.row.time <= 1000" type="warning">{{ scope.row.time }}ms</el-tag>
                   <el-tag v-else type="danger">{{ scope.row.time }}ms</el-tag>
                 </template>
               </el-table-column>
-              <el-table-column prop="createTime" label="创建日期" width="180px">
+              <el-table-column prop="createTime" :label="$t('financeCash.date_of_creation')" width="180px">
                 <template slot-scope="scope">
                   <span>{{ parseTime(scope.row.createTime) }}</span>
                 </template>
@@ -86,6 +86,10 @@ import { getToken } from '@/utils/auth'
 import store from '@/store'
 import { parseTime } from '@/utils/index'
 import initData from '@/mixins/initData'
+import { financeEarnings,financeCash,login } from '@/utils/i18n'// 国际化主题名字
+
+import Cookies from 'js-cookie'
+var lang=Cookies.get('language') || 'en';
 export default {
   name: 'Center',
   components: { updatePass, updateEmail },
@@ -229,4 +233,11 @@ export default {
     border-top: 0px;
     border-bottom: 1px solid rgba(0,190,255,1);
   }
+</style>
+
+
+<style>
+.el-card__body{
+  padding:10px;
+}
 </style>

@@ -5,23 +5,18 @@
  * DEBUG: debug状态
  * cancleHTTP: 取消请求头设置
  */
-let baseUrl = '/api';
-let DEBUG= false;
+let baseUrlLang = '/api';
 if (process.env.NODE_ENV == 'development') {
     // baseUrl = "http://shipz.jie360.com.cn";
     // baseUrl = "http://linf.jie360.com.cn";
-    baseUrl="/api"
-    DEBUG= true;
+    baseUrlLang="/api"
 }else if(process.env.NODE_ENV == 'testing'){
-    baseUrl = "http://investor.jie360.com.cn";
+    baseUrlLang = "http://investor.jie360.com.cn";
     // baseUrl = "http://shipz.jie360.com.cn";
     // baseUrl = "http://linf01.jie360.com.cn";
-    DEBUG= false;
 }else if(process.env.NODE_ENV == 'production'){
-    baseUrl = "https://pc.fptvip.com";
-    DEBUG= false;
+    baseUrlLang = "https://pc.fptvip.com";
 }
 export{
-    baseUrl,
-    DEBUG
+    baseUrlLang
 }

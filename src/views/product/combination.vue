@@ -9,28 +9,46 @@
 				      <img style="width:100%;height:160px" src="../../assets/images/img_chanpin1.png" alt />
 				    </div>
 				    <div class="val">
-              <h5>自定义产品</h5>
+              <h5>
+                <!-- 自定义产品 -->
+                {{$t('products.custom_product')}}
+              </h5>
 				      <p>
-				        <span>金额：</span>
-				        <span>{{customPrice}}$</span>
+				        <span>
+                  <!-- 金额： -->
+                  {{$t('products.money')}}：
+                </span>
+				        <span>{{customPrice}}($)</span>
 				      </p>
 				      <p>
-				        <span>周期：</span>
-				        <span>{{config.period}}天</span>
+				        <span>
+                  <!-- 周期： -->
+                  {{$t('products.period')}}：
+                </span>
+				        <span>{{config.period}} {{$t('products.day')}}</span>
 				      </p>
 				      <p>
-				        <span>回报率：</span>
+				        <span>
+                  <!-- 回报率： -->
+                  {{$t('products.rate_of_return')}}：
+                </span>
 				        <!-- <span>{{config.profit}}</span> -->
-                <span>120+%</span>
+                <span>130+%</span>
 				      </p>
               <p>
-                <span>收益分配：</span>
-                <span>200天</span>
+                <span>
+                  <!-- 收益分配： -->
+                  {{$t('products.income_distribution')}}：
+                  </span>
+                <span>200 {{$t('products.day')}}</span>
               </p>
 				      <p>
-				        <span>数量：</span>
+				        <span class="num">
+                  <!-- 数量： -->
+                  {{$t('products.quantity')}}：
+                </span>
 				        <span>
-				            <el-input-number size="mini" v-model="num" :min="1" :max="100" @change="countPrice" style="margin-right:5px;"></el-input-number>台
+				            <el-input-number size="mini" v-model="num" :min="1" :max="100" @change="countPrice" style="margin-right:5px;"></el-input-number>{{$t('products.desk')}}
 				        </span>
 				      </p>
 				      <p style="display: flex;justify-content:flex-end;">
@@ -38,7 +56,10 @@
                 class="buyBtn"
 				          style="color:#fff;cursor: pointer;justify-content: center;"
 				          @click="contribut(1,i)"
-				        >购买</span>
+				        >
+                <!-- 购买 -->
+                {{$t('products.buy')}}
+                </span>
 				      </p>
 				    </div>
 				  </div>
@@ -51,26 +72,41 @@
             <div class="val">
               <h5>{{i.name}}</h5>
               <p>
-                <span>金额：</span>
+				        <span>
+                  <!-- 金额 -->
+                  {{$t('products.money')}}
+                  ：</span>
                 <span>{{i.price}}($)</span>
               </p>
               <p>
-                <span>周期：</span>
-                <span>{{i.period}}天</span>
+				        <span>
+                  <!-- 周期 -->
+                  {{$t('products.period')}}
+                  ：</span>
+                <span>{{i.period}}{{$t('products.day')}}</span>
               </p>
               <p>
-                <span>回报率：</span>
-                <span>120+%</span>
+				        <span>
+                  <!-- 回报率 -->
+                  {{$t('products.rate_of_return')}}
+                  ：</span>
+                <span>130+%</span>
                 <!-- <span>{{i.profit_rate*100 | formatrRate}}(%)</span> -->
               </p>
               <p>
-                <span>收益分配：</span>
-                <span>{{i.profit_distribute}}</span>
+                <span>
+                  <!-- 收益分配 -->
+                  {{$t('products.income_distribution')}}
+                  ：</span>
+                <span>{{i.profit_distribute}} {{$t('products.day')}}</span>
               </p>
               <p>
-                <span>数量：</span>
+                <span >
+                  <!-- 数量 -->
+                  {{$t('products.quantity')}}
+                  ：</span>
                 <span>
-                  <span :key="i.id" style="margin-right:5px;width:0;">{{i.num}}</span>台
+                  <span :key="i.id" style="margin-right:5px;width:0;">{{i.num}}</span>{{$t('products.desk')}}
                 </span>
               </p>
               <p style="display: flex;justify-content:flex-end;">
@@ -78,7 +114,10 @@
                 class="buyBtn"
                   style="color:#fff;cursor: pointer;justify-content: center;"
                   @click="contribut(2,i)"
-                >购买</span>
+                >
+                  <!-- 购买 -->
+                  {{$t('products.buy')}}
+                </span>
               </p>
             </div>
           </div>
@@ -91,16 +130,31 @@
         <h4>
           <!-- <span>一键复投</span>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt /> -->
-          <div><span>购买</span><img src="../../assets/images/img_jianbian.png" alt="" srcset=""></div>
+          <div>
+            <span>
+              <!-- 购买 -->
+              {{$t('products.buy')}}
+            </span>
+            <img src="../../assets/images/img_jianbian.png" alt="" srcset="">
+          </div>
           <img @click="contribute" src="../../assets/logo/cuo.png" alt />
         </h4>
         <div style="height:200px;line-height:200px;text-align:center;">
           <p></p>
-          <p class="desc-box">确认购买该产品吗？</p>
+          <p class="desc-box">
+            <!-- 确认购买该产品吗？ -->
+            {{$t('products.confirm_purchase')}}
+            </p>
         </div>
         <div class="bottom-btn">
-          <span @click="ensure">确定</span>
-          <span @click="contribute">取消</span>
+          <span @click="ensure">
+            <!-- 确认 -->
+            {{$t('products.determine')}}
+          </span>
+          <span @click="contribute">
+            <!-- 取消 -->
+            {{$t('products.cancel')}}
+          </span>
         </div>
       </div>
     </div>
@@ -110,6 +164,7 @@
 <script>
 import { all, purchase, reivest,getConfig } from "@/api/produc";
 import { signFigures } from '../../utils/floatToInt.js'
+import { fptproduct } from '@/utils/i18n'
 export default {
   data() {
     return {
@@ -141,6 +196,7 @@ export default {
       }
     },
   methods: {
+    fptproduct,
 		countPrice(){
 			this.customPrice = this.num*this.config.amount
 		},
@@ -180,12 +236,18 @@ export default {
 
         // this.$message.success("购买产品成功");
         // this.$router.push({ path: "/product/record" });
-       if(res=='余额不足,购买失败'){
-        this.$message.error("余额不足,购买失败");
-       }else{
-          this.$message.success("购买产品成功");
-           this.$router.push({ path: "/product/record" });
-       }
+      //  if(res=='余额不足,购买失败'){
+      //   this.$message.error("余额不足,购买失败");
+      //  }else{
+      //     this.$message.success("购买产品成功");
+      //      this.$router.push({ path: "/product/record" });
+      //  }
+        if(res.code==200){
+          this.$message.success(res.msg);
+          this.$router.push({ path: "/product/record" });
+        }else{
+          this.$message.error(res.msg);
+        }
       });
     },
     // this.list = eval(res.list);
@@ -289,10 +351,10 @@ export default {
         }
       }
       div:nth-of-type(2) {
-        width: 30%;
+        width: 38%;
         // width: 300px;
         // margin: 0 18%;
-        margin-right: 5%;
+        margin-right: 3%;
         height: 100%;
         color: #fff;
         p {

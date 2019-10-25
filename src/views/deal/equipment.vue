@@ -528,7 +528,7 @@ export default {
     box-sizing: border-box;
     border: 1px solid transparent;
     white-space: nowrap;
-    color: #fff !important;
+    // color: #fff !important;
     border-radius: 0;
   }
   .jy-btn{

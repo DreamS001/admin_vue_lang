@@ -1,4 +1,14 @@
-//头部
+//登录
+export function loginAdmin(hw){
+  const hasKey = this.$te('hw.' + hw)
+  const translatedTitle = this.$t('hw.' + hw) // $t :this method from vue-i18n, inject in @/lang/index.js
+
+  if (hasKey) {
+    return translatedTitle
+  }
+  return hw
+}
+//首页
 export function fpthome(hw){
     const hasKey = this.$te('hw.' + hw)
     const translatedTitle = this.$t('hw.' + hw) // $t :this method from vue-i18n, inject in @/lang/index.js
@@ -8,6 +18,17 @@ export function fpthome(hw){
     }
     return hw
 }
+//产品
+export function fptproduct(hw){
+  const hasKey = this.$te('hw.' + hw)
+  const translatedTitle = this.$t('hw.' + hw) // $t :this method from vue-i18n, inject in @/lang/index.js
+
+  if (hasKey) {
+    return translatedTitle
+  }
+  return hw
+}
+//系统
 export function systemes(sys){
   const hasKey = this.$te('hw.' + sys)
   const translatedTitle = this.$t('hw.' + sys) // $t :this method from vue-i18n, inject in @/lang/index.js
